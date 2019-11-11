@@ -6,9 +6,7 @@ var logger = require('morgan');
 // require('dotenv').config();  // Being required in www
 
 require('./config/database');
-// load system settings document (async, so not available in server.js)
-// access in other modules via require('./config/settings').current
-require('./config/settings').get();
+require('./config/subscribe').subscribe();
 
 var indexRouter = require('./routes/index');
 
