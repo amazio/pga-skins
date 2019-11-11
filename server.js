@@ -9,6 +9,7 @@ require('./config/database');
 require('./config/subscribe').subscribe();
 
 var indexRouter = require('./routes/index');
+var holesRouter = require('./routes/api/holes');
 
 var app = express();
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/api/holes', holesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
