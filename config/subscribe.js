@@ -5,6 +5,10 @@ module.exports = {
 };
 
 function subscribe() {
+
+
+console.log('Going to subscribe at: ' + process.env.SUBSCRIBE_POST_URL)
+
   fetch(
     process.env.SUBSCRIBE_POST_URL,
     {
@@ -17,5 +21,6 @@ function subscribe() {
     }
   )
   .then(res => res.json())
-  .then(json => console.log(json));
+  .then(json => console.log(json))
+  .catch(err => console.log(err));
 } 
