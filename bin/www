@@ -24,6 +24,9 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+// Load and attach socket.io to the http server
+require('../io').attach(server);
+
 /**
  * Listen on provided port, on all network interfaces.
  */
