@@ -5,7 +5,7 @@ import HomeScreen from './screens/HomeScreen/HomeScreen';
 
 function App() {
 
-  const [tourney, setTourney] = useState([]);
+  const [tourney, setTourney] = useState({leaderboard: []});
 
   useEffect(function() {
     tourneyService.subscribeToUpdates(setTourney);
