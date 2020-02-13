@@ -14,5 +14,4 @@ function getCurrent() {
 
 function update(tourney) {
   curTourney = tourney;
-  io.emit('update-tourney', curTourney);
 }

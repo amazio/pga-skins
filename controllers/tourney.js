@@ -1,10 +1,10 @@
-const tourneyService = require('../services/tourneyService');
+const realtimeService = require('../services/realtimeService');
 
 module.exports = {
   update
 };
 
 function update(req, res) {
-  tourneyService.update(req.body);
+  realtimeService.updateTourney(req.body);
   res.json({tourneyUpdated: new Date()});
 }
