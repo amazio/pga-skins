@@ -5,6 +5,8 @@ const favicon = require('serve-favicon');
 
 // require('dotenv').config();  // Being required in www
 
+console.log(process.env.DATABASE_URL)
+
 require('./config/database');
 require('./config/subscribe').subscribe();
 

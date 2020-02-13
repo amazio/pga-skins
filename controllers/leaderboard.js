@@ -1,11 +1,12 @@
+const io = require('../io');
+let curLeaderboard;
+
 module.exports = {
   update
 };
 
 function update(req, res) {
-  // TODO: Store updated data and emit to clients
-
-  
-
+  curLeaderboard = req.body;
+  io.emit('update-leaderboard', curLeaderboard);
   res.json({lastUpdated: new Date()});
 }
