@@ -1,13 +1,10 @@
-const io = require('../io');
-
-let curTourney;
+const tourneyService = require('../services/tourneyService');
 
 module.exports = {
   update
 };
 
 function update(req, res) {
-  curTourney = req.body;
-  io.emit('update-tourney', curTourney);
+  tourneyService.update(req.body);
   res.json({tourneyUpdated: new Date()});
 }

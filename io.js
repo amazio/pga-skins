@@ -1,9 +1,8 @@
 const io = require('socket.io')();
+const tourneyService = require('./services/tourneyService');
 
 io.on('connection', function(socket) {
-  console.log('Client connected to socket.io');
-
-
+  socket.emit('update-tourney', tourneyService.getCurrent());
 });
 
 module.exports = io;
