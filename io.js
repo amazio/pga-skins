@@ -1,8 +1,8 @@
 const io = require('socket.io')();
-const realtimeService = require('./services/realtimeService');
+const tourneyService = require('./services/tourneyService');
 
 io.on('connection', function(socket) {
-  socket.emit('update-tourney', realtimeService.getCurrentTourney());
+  socket.emit('update-tourney', tourneyService.getCurrent());
 });
 
 module.exports = io;
