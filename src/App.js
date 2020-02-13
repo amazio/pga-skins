@@ -1,22 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import leaderboardService from './services/leaderboardService';
+import tourneyService from './services/tourneyService';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 
 function App() {
 
-  const [leaderboard, setLeaderboard] = useState([]);
+  const [tourney, setTourney] = useState([]);
 
   useEffect(function() {
-    leaderboardService.subscribeToUpdates(setLeaderboard);
+    tourneyService.subscribeToUpdates(setTourney);
     return function() {
-      leaderboardService.unsubscribeToUpdates();
+      tourneyService.unsubscribeToUpdates();
     };
   }, []);
 
   return (
     <div>
-      <HomeScreen leaderboard={leaderboard}/>
+      <HomeScreen leaderboard={tourney.leaderboard}/>
     </div>
   );
 }
