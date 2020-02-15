@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
+import {Route, Switch} from 'react-router-dom';
 import tourneyService from './services/tourneyService';
-import HomeScreen from './screens/HomeScreen/HomeScreen';
+
+import GridWithBottomMenu from './screens/GridWithBottomMenu/GridWithBottomMenu';
 
 function App() {
 
@@ -15,9 +17,12 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <HomeScreen leaderboard={tourney.leaderboard}/>
-    </div>
+    <Switch>
+      {/* Routes without bottom menu go here */}
+      <Route path='/'>
+        <GridWithBottomMenu tourney={tourney}/>
+      </Route>
+    </Switch>
   );
 }
 

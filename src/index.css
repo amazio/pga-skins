@@ -1,4 +1,4 @@
-body, #root {
+body {
   height: calc(var(--vh, 1vh) * 100);
   margin: 0;
 }
@@ -17,5 +17,6 @@ body, #root {
 }
 
 #root {
+  height: 100%;
   background-color: var(--bg);
 }

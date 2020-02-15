@@ -1,0 +1,10 @@
+GWBM_grid {
+  display: grid;
+  grid-template-rows: 1fr 56px;
+  grid-template-columns: 100%;
+}
+
+GWBM_content {
+  height: 100%;
+  background-color: 'peachpuff';
+}
