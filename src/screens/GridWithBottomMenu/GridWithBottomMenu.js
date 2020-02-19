@@ -1,7 +1,7 @@
 import React from 'react';
 import './GridWithBottomMenu.css';
 import {Route, Switch} from 'react-router-dom';
-import HomeScreen from '../HomeScreen/HomeScreen';
+import CurTourneyScreen from '../CurTourneyScreen/CurTourneyScreen';
 
 function GridWithBottomMenu(props) {
   return (
@@ -9,7 +9,7 @@ function GridWithBottomMenu(props) {
       <section className='GWBM_content'>
         <Switch>
           <Route path='/'>
-            <HomeScreen leaderboard={props.tourney.leaderboard} />
+            <CurTourneyScreen />
           </Route>
         </Switch>
       </section>

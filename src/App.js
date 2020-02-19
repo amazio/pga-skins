@@ -1,28 +1,33 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect, useReducer } from 'react';
 import './App.css';
-import {Route, Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import StoreProvider from './contexts/StoreProvider';
+import storeReducer, { initialState, actions } from './reducers/store-reducer';
 import tourneyService from './services/tourneyService';
 
 import GridWithBottomMenu from './screens/GridWithBottomMenu/GridWithBottomMenu';
 
 function App() {
+  const [state, dispatch] = useReducer(storeReducer, initialState);
 
-  const [tourney, setTourney] = useState({leaderboard: []});
-
-  useEffect(function() {
-    tourneyService.subscribeToUpdates(setTourney);
-    return function() {
+  useEffect(function () {
+    tourneyService.subscribeToUpdates(function(updatedTourney) {
+      dispatch({type: actions.UPDATE_CUR_TOURNEY, payload: updatedTourney});
+    });
+    return function () {
       tourneyService.unsubscribeToUpdates();
     };
   }, []);
 
   return (
-    <Switch>
-      {/* Routes without bottom menu go here */}
-      <Route path='/'>
-        <GridWithBottomMenu tourney={tourney}/>
-      </Route>
-    </Switch>
+    <StoreProvider.Provider value={{state, dispatch}}>
+      <Switch>
+        {/* Routes without bottom menu go here */}
+        <Route path='/'>
+          <GridWithBottomMenu />
+        </Route>
+      </Switch>
+    </StoreProvider.Provider>
   );
 }
 
