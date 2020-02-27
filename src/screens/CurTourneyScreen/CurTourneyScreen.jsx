@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
 
+import {Button} from 'rsuite';
+
 function CurTourneyScreen() {
   const {state, dispatch} = useContext(StoreProvider);
   let players = state.curTourney ? 
@@ -9,6 +11,7 @@ function CurTourneyScreen() {
   
   return (
     <section>
+      <Button>Hello World</Button>
       {players}
     </section>
   );
