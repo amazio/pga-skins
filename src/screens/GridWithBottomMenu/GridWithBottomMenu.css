@@ -11,7 +11,7 @@
 
 .GWBM_content {
   height: 100%;
-  background-color: peachpuff;
+  padding: 1vmin;
   overflow-y: scroll;
 }
 

@@ -1,19 +1,23 @@
 import React, { useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
 
-import {Button} from 'rsuite';
+import {Content, TagPicker} from 'rsuite';
 
 function CurTourneyScreen() {
   const {state, dispatch} = useContext(StoreProvider);
-  let players = state.curTourney ? 
+  const players = state.curTourney ? 
     state.curTourney.leaderboard.map(p => <div>{p.curPosition} - {p.shortName} - {p.total} thru {p.thru}</div>)
     : <div>LOADING...</div>;
+
+  const playerNames = state.curTourney ? 
+    state.curTourney.leaderboard.map(p => ({label: p.name, value: p.name}))
+    : [];
   
   return (
-    <section>
-      <Button>Hello World</Button>
+    <Content>
+      <TagPicker data={playerNames} style={{width: '100%'}} />
       {players}
-    </section>
+    </Content>
   );
 }
 

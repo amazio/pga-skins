@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from 'react';
-import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import StoreProvider from './contexts/StoreProvider';
 import storeReducer, { initialState, actions } from './reducers/store-reducer';
