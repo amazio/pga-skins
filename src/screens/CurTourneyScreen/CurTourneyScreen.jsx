@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
 
-import {Content, TagPicker} from 'rsuite';
-
 function CurTourneyScreen() {
   const {state, dispatch} = useContext(StoreProvider);
   const players = state.curTourney ? 
@@ -10,14 +8,14 @@ function CurTourneyScreen() {
     : <div>LOADING...</div>;
 
   const playerNames = state.curTourney ? 
-    state.curTourney.leaderboard.map(p => ({label: p.name, value: p.name}))
-    : [];
+    state.curTourney.leaderboard.map(p =>
+      ({label: p.name, value: p.name})).sort((a, b) => a.name - b.name)
+      : [];
   
   return (
-    <Content>
-      <TagPicker data={playerNames} style={{width: '100%'}} />
+    <section>
       {players}
-    </Content>
+    </section>
   );
 }
 

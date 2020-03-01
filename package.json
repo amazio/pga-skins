@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.0",
-    "@testing-library/user-event": "^7.2.1",
+    "@material-ui/core": "^4.9.5",
+    "@material-ui/icons": "^4.9.1",
     "express": "^4.17.1",
     "mongoose": "^5.9.0",
     "morgan": "^1.9.1",
@@ -14,7 +13,6 @@
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
-    "rsuite": "^4.2.1",
     "serve-favicon": "^2.5.0",
     "socket.io": "^2.3.0"
   },

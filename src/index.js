@@ -5,9 +5,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router} from 'react-router-dom';
 
-// https://rsuitejs.com/en/guide/usage/
-import 'rsuite/dist/styles/rsuite-default.css';
-
 /*--- hack to fix 100vh on mobile issue ---*/
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 let vh = window.innerHeight * 0.01;
