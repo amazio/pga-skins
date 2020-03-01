@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router} from 'react-router-dom';
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'; 
 
 /*--- hack to fix 100vh on mobile issue ---*/
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
@@ -18,7 +19,21 @@ window.addEventListener('resize', () => {
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
 
-ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));
+const palette = {
+  primary: { main: '#E8F5E9', contrastText: '#424242' },
+  secondary: { main: '#B9F6CA', contrastText: '#424242' }
+};
+
+const theme = createMuiTheme(palette, 'Minty Green');
+
+ReactDOM.render(
+  <Router>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </Router>
+  , document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

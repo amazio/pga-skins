@@ -3,7 +3,6 @@ const socket = window.io();
 /*--- vars to hold useState setters ---*/
 let setTourneyFn;
 
-
 /*--- App component calls these to sub/unsub for updates ---*/
 function subscribeToUpdates(setTourney) {
   setTourneyFn = setTourney;

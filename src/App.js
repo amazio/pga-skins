@@ -1,18 +1,10 @@
 import React, { useEffect, useReducer } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'; 
 import StoreProvider from './contexts/StoreProvider';
 import storeReducer, { initialState, actions } from './reducers/store-reducer';
 import tourneyService from './services/tourneyService';
 
 import GridWithBottomMenu from './screens/GridWithBottomMenu/GridWithBottomMenu';
-
-const palette = {
-  primary: { main: '#E8F5E9', contrastText: '#424242' },
-  secondary: { main: '#B9F6CA', contrastText: '#424242' }
-};
-
-const theme = createMuiTheme(palette, 'Minty Green');
 
 function App() {
   const [state, dispatch] = useReducer(storeReducer, initialState);
@@ -28,14 +20,12 @@ function App() {
 
   return (
     <StoreProvider.Provider value={{state, dispatch}}>
-      <ThemeProvider theme={theme}>
-        <Switch>
-          {/* Routes without bottom menu go here */}
-          <Route path='/'>
-            <GridWithBottomMenu />
-          </Route>
-        </Switch>
-      </ThemeProvider>
+      <Switch>
+        {/* Routes without bottom menu go here */}
+        <Route path='/'>
+          <GridWithBottomMenu />
+        </Route>
+      </Switch>
     </StoreProvider.Provider>
   );
 }
