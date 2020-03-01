@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
+import {List, ListItem, ListItemText} from '@material-ui/core';
 
 function CurTourneyScreen() {
   const {state, dispatch} = useContext(StoreProvider);
   const players = state.curTourney ? 
-    state.curTourney.leaderboard.map(p => <div>{p.curPosition} - {p.shortName} - {p.total} thru {p.thru}</div>)
-    : <div>LOADING...</div>;
+    state.curTourney.leaderboard.map(p => <ListItem><ListItemText>{p.curPosition} - {p.shortName} - {p.total} thru {p.thru}</ListItemText></ListItem>)
+    : <ListItem>LOADING...</ListItem>;
 
   const playerNames = state.curTourney ? 
     state.curTourney.leaderboard.map(p =>
@@ -13,9 +14,11 @@ function CurTourneyScreen() {
       : [];
   
   return (
-    <section>
+    <>
+    <List>
       {players}
-    </section>
+    </List>
+    </>
   );
 }
 
