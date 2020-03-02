@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
 import {List, ListItem, ListItemText} from '@material-ui/core';
+import TourneyCard from '../../components/TourneyCard/TourneyCard';
 
 function CurTourneyScreen() {
   const {state, dispatch} = useContext(StoreProvider);
@@ -9,15 +10,14 @@ function CurTourneyScreen() {
     : <ListItem>LOADING...</ListItem>;
 
   const playerNames = state.curTourney ? 
-    state.curTourney.leaderboard.map(p =>
-      ({label: p.name, value: p.name})).sort((a, b) => a.name - b.name)
-      : [];
+    state.curTourney.leaderboard
+      .sort((a, b) => a.name - b.name)
+      .map(p =>({label: p.name, value: p.name}))
+    : [];
   
   return (
     <>
-    <List>
-      {players}
-    </List>
+      <TourneyCard />
     </>
   );
 }

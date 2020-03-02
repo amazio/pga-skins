@@ -3,7 +3,7 @@ import './GridWithBottomMenu.css';
 import {Route, Switch} from 'react-router-dom';
 import {Box} from '@material-ui/core';
 import CurTourneyScreen from '../CurTourneyScreen/CurTourneyScreen';
-import BottomNav from '../../components/BottomNav';
+import BottomNav from '../../components/BottomNav/BottomNav';
 
 function GridWithBottomMenu(props) {
   return (
