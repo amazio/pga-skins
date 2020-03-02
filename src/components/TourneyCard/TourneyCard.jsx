@@ -1,19 +1,21 @@
-import React, {useContext} from 'react';
-import StoreProvider from '../../contexts/StoreProvider';
-import {Card, CardContent, Typography} from '@material-ui/core';
+import React from 'react';
 
-function TourneyCard() {
-  const {state, dispatch} = useContext(StoreProvider);
+import {Card, CardContent, CardActions, Typography, Button} from '@material-ui/core';
 
+function TourneyCard({tourney, curTourney}) {
   return (
-    state.curTourney ?
+    tourney ?
       <Card>
         <CardContent>
-          <Typography>{state.curTourney.title}</Typography>
+          <Typography>{tourney.title}</Typography>
         </CardContent>
+        { curTourney &&
+        <CardActions>
+          <Button variant='contained' color='primary'>ADD MATCH</Button>
+        </CardActions>
+        }
       </Card>
-      : <h3>Loading</h3>
-
+      : <h3>No Tourney</h3>
   );
 }
 

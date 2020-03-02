@@ -19,12 +19,14 @@ window.addEventListener('resize', () => {
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
 
-const palette = {
-  primary: { main: '#E8F5E9', contrastText: '#424242' },
-  secondary: { main: '#B9F6CA', contrastText: '#424242' }
+const themeMint = {
+  palette: {
+    primary: { main: '#E8F5E9', contrastText: '#424242' },
+    secondary: { main: '#B9F6CA', contrastText: '#424242' }
+  }
 };
 
-const theme = createMuiTheme(palette, 'Minty Green');
+const theme = createMuiTheme(themeMint, 'Minty Green');
 
 ReactDOM.render(
   <Router>

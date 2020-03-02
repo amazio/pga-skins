@@ -17,7 +17,7 @@ function CurTourneyScreen() {
   
   return (
     <>
-      <TourneyCard />
+      <TourneyCard tourney={state.curTourney} curTourney={true} />
     </>
   );
 }
