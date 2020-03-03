@@ -1,15 +1,24 @@
+import matchService from '../services/matchService';
+
 export const initialState = {
+  username: '',
+  deviceId: '',
   curTourney: null,
+  curMatches: []
 };
 
 export const actions = {
+  UPDATE_USER_DEVICE_INFO: 'UPDATE_USER_DEVICE_INFO',
   UPDATE_CUR_TOURNEY: 'UPDATE_CUR_TOURNEY',
 };
 
-function storeReducer(state, action) {
+async function storeReducer(state, action) {
   switch(action.type) {
+    case actions.UPDATE_USER_DEVICE_INFO:
+      return {...state, deviceId: action.payload.deviceId, username: action.payload.username};
     case actions.UPDATE_CUR_TOURNEY:
-      return {...state, curTourney: action.payload}
+      const curMatches = matchService.updateCurMatches(action.payload);
+      return {...state, curTourney: action.payload, curMatches};
     default:
       return state;
   }

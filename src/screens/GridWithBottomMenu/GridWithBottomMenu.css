@@ -5,7 +5,7 @@
   bottom: 0;
   right: 0;
   display: grid;
-  grid-template-rows: 1fr 56px;
+  grid-template-rows: auto 1fr auto;
   grid-template-columns: 100%;
 }
 

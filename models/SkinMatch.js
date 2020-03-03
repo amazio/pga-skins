@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const holeSchema = new Schema({
   strokes: {type: Number, default: null},
-  par: {type: Number, default: null}
+  par: {type: Number, default: null},
+  skin: {type: Boolean, default: false},
+  carry: {type: Boolean, default: false}
 }, {_id: false});
 
 const roundSchema = new Schema({
@@ -15,15 +17,17 @@ const roundSchema = new Schema({
 const playerSchema = new Schema({
   name: String,
   playerId: String,
-  roundNum: Number,
+  thru: {type: String, default: null},
   round: roundSchema
 });
 
 const skinMatchSchema = new Schema({
   tourneyId: {type: Schema.Types.ObjectId, required: true},
   tourneyTitle: String,
+  roundNum: Number,
+  completed: {type: Boolean, default: false},
   moneyPerSkin: {type: Number, default: 5},
-  players: [playerSchema],
+  players: [playerSchema]
 }, {
   timestamps: true
 });
