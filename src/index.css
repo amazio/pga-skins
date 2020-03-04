@@ -10,3 +10,14 @@ body {
 #root {
   height: 100%;
 }
+
+.text-center {
+  text-align: center;
+}
+
+.flex-col-ctr {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
