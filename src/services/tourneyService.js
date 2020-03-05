@@ -1,26 +1,17 @@
-const socket = window.io();
+import {actions} from '../reducers/store-reducer';
 
-/*--- vars to hold useState setters ---*/
-let setTourneyFn;
-
-/*--- App component calls these to sub/unsub for updates ---*/
-function subscribeToUpdates(setTourney) {
-  setTourneyFn = setTourney;
-  socket.on('update-tourney', notifyUpdateTourney);
-}
-
-function unsubscribeToUpdates() {
-  socket.off('update-tourney', notifyUpdateTourney);
-  setTourneyFn = null;
-}
-
-/*--- Helper Functions ---*/
-
-function notifyUpdateTourney(tourney) {
-  if (setTourneyFn) setTourneyFn(tourney);
-}
+const CUR_TOURNEY_ENDPOINT = process.env.REACT_APP_CUR_TOURNEY_ENDPOINT;
 
 export default {
-  subscribeToUpdates,
-  unsubscribeToUpdates
+  setCurTourney
+};
+
+async function setCurTourney(dispatch, freqMS) {
+  const tourney = await getCurTourney();
+  dispatch({type: actions.UPDATE_CUR_TOURNEY, payload: tourney});
+  setTimeout(() => setCurTourney(dispatch, freqMS), freqMS);
+}
+
+function getCurTourney() {
+  return fetch(CUR_TOURNEY_ENDPOINT).then(res => res.json());
 }

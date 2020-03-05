@@ -3,6 +3,7 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import StoreProvider from './contexts/StoreProvider';
 import storeReducer, { initialState, actions } from './reducers/store-reducer';
 import userService from './services/userService';
+import tourneyService from './services/tourneyService';
 
 import GridWithBottomMenu from './screens/GridWithBottomMenu/GridWithBottomMenu';
 import GridNoMenu from './screens/GridNoMenu/GridNoMenu';
@@ -13,13 +14,10 @@ function App() {
   console.log(state)
 
   useEffect(function () {
+    // Fetch the cur tourney every hour
+    tourneyService.setCurTourney(dispatch, 1000 * 60 * 60);
+    // init will return true if this is the first visit for the device
     if (userService.init(dispatch)) history.push('/welcome');
-    // tourneyService.subscribeToUpdates(function(updatedTourney) {
-    //   dispatch({type: actions.UPDATE_CUR_TOURNEY, payload: updatedTourney});
-    // });
-    // return function () {
-    //   tourneyService.unsubscribeToUpdates();
-    // };
   }, []);
 
   return (
