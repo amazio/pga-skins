@@ -20,17 +20,17 @@ function App() {
   }, []);
 
   return (
-    <StoreProvider.Provider value={{state, dispatch}}>
+    // <StoreProvider.Provider value={{state, dispatch}}>
       <Switch>
         <Route path='/welcome'>
-          <GridNoMenu />
+          <GridNoMenu dispatch={dispatch} />
         </Route>
         {/* Routes without bottom menu go above */}
         <Route path='/'>
-          <GridWithBottomMenu />
+          <GridWithBottomMenu state={state} dispatch={dispatch}/>
         </Route>
       </Switch>
-    </StoreProvider.Provider>
+    // </StoreProvider.Provider>
   );
 }
 

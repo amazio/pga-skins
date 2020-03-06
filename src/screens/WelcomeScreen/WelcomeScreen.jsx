@@ -4,13 +4,13 @@ import {Button, TextField, Typography} from '@material-ui/core';
 import StoreProvider from '../../contexts/StoreProvider';
 import userService from '../../services/userService';
 
-function WelcomeScreen() {
+function WelcomeScreen(props) {
   const history = useHistory();
-  const {dispatch} = useContext(StoreProvider);
+  // const {dispatch} = useContext(StoreProvider);
   const [username, setUsername] = useState('');
 
   function updateUsername() {
-    userService.updateUsername(username, dispatch);
+    userService.updateUsername(username, props.dispatch);
     history.push('/');
   }
 
