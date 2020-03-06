@@ -4,11 +4,10 @@ import StoreProvider from './contexts/StoreProvider';
 import storeReducer, { initialState } from './reducers/store-reducer';
 import userService from './services/userService';
 import tourneyService from './services/tourneyService';
-
 import GridWithBottomMenu from './screens/GridWithBottomMenu/GridWithBottomMenu';
 import GridNoMenu from './screens/GridNoMenu/GridNoMenu';
 
-function App() {
+export default function App() {
   const history = useHistory();
   const [state, dispatch] = useReducer(storeReducer, initialState);
   
@@ -20,18 +19,16 @@ function App() {
   }, []);
 
   return (
-    // <StoreProvider.Provider value={{state, dispatch}}>
+    <StoreProvider.Provider value={{state, dispatch}}>
       <Switch>
         <Route path='/welcome'>
-          <GridNoMenu dispatch={dispatch} />
+          <GridNoMenu />
         </Route>
         {/* Routes without bottom menu go above */}
         <Route path='/'>
-          <GridWithBottomMenu state={state} dispatch={dispatch}/>
+          <GridWithBottomMenu />
         </Route>
       </Switch>
-    // </StoreProvider.Provider>
+    </StoreProvider.Provider>
   );
 }
-
-export default App;

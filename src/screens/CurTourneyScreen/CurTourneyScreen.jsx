@@ -1,13 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
 import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner';
 import TourneyCard from '../../components/TourneyCard/TourneyCard';
 
-function CurTourneyScreen({ state, dispatch }) {
-  // const { state } = useContext(StoreProvider);
-  // const {curTourney} = state;
-  // const [curTourney, setCurTourney] = useState(null);
-  // let playerNames;
+function CurTourneyScreen() {
+  const { state } = useContext(StoreProvider);
 
   // useEffect(function () {
   //   if (state.then) state.then(s => setCurTourney(s.curTourney));
