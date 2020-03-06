@@ -4,7 +4,8 @@ export const initialState = {
   username: '',
   deviceId: '',
   curTourney: null,
-  curMatches: []
+  curSavedMatches: null,
+  prevSavedMatches: null
 };
 
 export const actions = {
@@ -20,8 +21,8 @@ async function storeReducer(state, action) {
     case actions.UPDATE_USERNAME:
       return {...state, username: action.payload};
     case actions.UPDATE_CUR_TOURNEY:
-      const curMatches = matchService.updateCurMatches(action.payload);
-      return {...state, curTourney: action.payload, curMatches};
+      const [curSavedMatches, prevSavedMatches] = matchService.getCurAndPrevSavedMatches(action.payload._id);
+      return {...state, curTourney: action.payload, curSavedMatches, prevSavedMatches};
     default:
       return state;
   }

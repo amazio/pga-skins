@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import StoreProvider from './contexts/StoreProvider';
-import storeReducer, { initialState, actions } from './reducers/store-reducer';
+import storeReducer, { initialState } from './reducers/store-reducer';
 import userService from './services/userService';
 import tourneyService from './services/tourneyService';
 
@@ -11,8 +11,7 @@ import GridNoMenu from './screens/GridNoMenu/GridNoMenu';
 function App() {
   const history = useHistory();
   const [state, dispatch] = useReducer(storeReducer, initialState);
-  console.log(state)
-
+  
   useEffect(function () {
     // Fetch the cur tourney every hour
     tourneyService.setCurTourney(dispatch, 1000 * 60 * 60);
