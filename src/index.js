@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
+import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router} from 'react-router-dom';
-import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'; 
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 
 /*--- hack to fix 100vh on mobile issue ---*/
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
@@ -21,8 +21,17 @@ window.addEventListener('resize', () => {
 
 const themeMint = {
   palette: {
-    primary: { main: '#E8F5E9', contrastText: '#424242' },
-    secondary: { main: '#B9F6CA', contrastText: '#424242' }
+    primary: { main: '#d5dcd6', contrastText: '#051907' },
+    secondary: { main: '#d8dae8', contrastText: '#051907' }
+  },
+  overrides: {
+    MuiBottomNavigationAction: {
+      "root": {
+        "&$selected": {
+          "color": "#051907"
+        }
+      }
+    }
   }
 };
 

@@ -30,3 +30,7 @@ body {
 .margin-bottom-1rem {
   margin-bottom: 1rem;
 }
+
+.margin-left-auto {
+  margin-left: auto !important;
+}

@@ -10,7 +10,7 @@ export default function MatchesScreen() {
   const {state, dispatch} = useContext(StoreProvider);
   return (
     <>
-      <Tabs value={state.ui.matchesTab} className='margin-bottom-1rem'
+      <Tabs variant='fullWidth' value={state.ui.matchesTab} className='margin-bottom-1rem'
         onChange={(e, newValue) => dispatch({type: actions.UPDATE_UI_MATCHES_TAB, payload: newValue})}
       >
         <Tab value='current' label='Current Tourney' />

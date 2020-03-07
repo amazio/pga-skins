@@ -1,22 +1,30 @@
 import React from 'react';
+import { Card, CardActions, CardHeader, Button } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 
-import {Card, CardContent, CardActions, Typography, Button} from '@material-ui/core';
+export default function TourneyCard({ tourney }) {
+  const { isStarted, isFinished, startDate, curRound, roundState } = tourney;
 
-function TourneyCard({tourney, curTourney}) {
+  function getStatus() {
+    if (isFinished) {
+      return 'Tourney Completed';
+    } else if (isStarted) {
+      return `Round ${curRound} ${roundState}`;
+    } else {
+      return `Starts on ${startDate}`;
+    }
+  }
+
   return (
-    tourney ?
-      <Card>
-        <CardContent>
-          <Typography>{tourney.title}</Typography>
-        </CardContent>
-        { curTourney &&
+    <Card variant='outlined' className='margin-bottom-1rem'>
+      <CardHeader title={tourney.title} subheader={getStatus()} />
+      {!isFinished &&
         <CardActions>
-          <Button variant='contained' color='primary'>ADD MATCH</Button>
+          <Button variant='contained' startIcon={<Add />} size='small' color='primary'>
+            MATCH
+          </Button>
         </CardActions>
-        }
-      </Card>
-      : <h3>No Tourney</h3>
+      }
+    </Card>
   );
 }
-
-export default TourneyCard;

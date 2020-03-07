@@ -1,30 +1,28 @@
 import React, { useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
+import { List, ListItem, Typography } from '@material-ui/core';
 import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner';
 import TourneyCard from '../../components/TourneyCard/TourneyCard';
 
-function CurTourneyScreen() {
-  const { state } = useContext(StoreProvider);
-
-  // useEffect(function () {
-  //   if (state.then) state.then(s => setCurTourney(s.curTourney));
-  // playerNames = state.curTourney ?
-  //   state.curTourney.leaderboard
-  //     .sort((a, b) => a.name - b.name)
-  //     .map(p => ({ label: p.name, value: p.name }))
-  //   : [];
-
-  // console.log(playerNames)
-  // }, [state]);
-
+export default function CurTourneyScreen() {
+  const {state} = useContext(StoreProvider);
+  const {curTourney, curSavedMatches: matches} = state;
   return (
-    state.curTourney ?
+    curTourney ?
       <>
-        <TourneyCard tourney={state.curTourney} curTourney={true} />
+        <TourneyCard tourney={state.curTourney} />
+        { 
+          matches.length ?
+            <List>
+              <ListItem>
+
+              </ListItem>
+            </List>
+          :
+            <Typography variant='p'>No Matches</Typography>
+        }
       </>
       :
       <CenteredSpinner />
   );
 }
-
-export default CurTourneyScreen;
