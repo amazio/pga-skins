@@ -10,7 +10,7 @@ export default function CurTourneyScreen() {
   return (
     curTourney ?
       <>
-        <TourneyCard tourney={state.curTourney} />
+        <TourneyCard tourney={state.curTourney} isCurTourney={true} />
         { 
           matches.length ?
             <List>
@@ -19,7 +19,7 @@ export default function CurTourneyScreen() {
               </ListItem>
             </List>
           :
-            <Typography variant='p'>No Matches</Typography>
+            <Typography variant='body1'>No Matches</Typography>
         }
       </>
       :

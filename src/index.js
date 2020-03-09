@@ -27,9 +27,15 @@ const themeMint = {
   overrides: {
     MuiBottomNavigationAction: {
       "root": {
+        "color": 'white',
         "&$selected": {
           "color": "#051907"
         }
+      }
+    },
+    MuiBottomNavigation: {
+      "root": {
+        backgroundColor: '#d5dcd6'
       }
     }
   }

@@ -3,7 +3,7 @@ import { Card, CardActions, CardHeader, Button } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 
 export default function TourneyCard({ tourney }) {
-  const { isStarted, isFinished, startDate, curRound, roundState } = tourney;
+  const { isCurTourney, isStarted, isFinished, startDate, curRound, roundState } = tourney;
 
   function getStatus() {
     if (isFinished) {
@@ -18,7 +18,7 @@ export default function TourneyCard({ tourney }) {
   return (
     <Card variant='outlined' className='margin-bottom-1rem'>
       <CardHeader title={tourney.title} subheader={getStatus()} />
-      {!isFinished &&
+      {!isCurTourney &&
         <CardActions>
           <Button variant='contained' startIcon={<Add />} size='small' color='primary'>
             MATCH
