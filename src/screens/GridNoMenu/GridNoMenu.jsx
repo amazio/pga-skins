@@ -11,9 +11,9 @@ function GridNoMenu() {
       <TopBar />
       <Container className='flex-col-ctr'>
         <Switch>
-          <Route exact path='/welcome'>
+          <Route exact path='/welcome' render={() =>
             <WelcomeScreen />
-          </Route>
+          } />
         </Switch>
       </Container>
     </Box>

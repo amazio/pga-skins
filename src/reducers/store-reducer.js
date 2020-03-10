@@ -14,6 +14,7 @@ export const actions = {
   UPDATE_USERNAME: 'UPDATE_USERNAME',
   UPDATE_CUR_TOURNEY: 'UPDATE_CUR_TOURNEY',
   UPDATE_UI_MATCHES_TAB: 'UPDATE_UI_MATCHES_TAB',
+  // CREATE_MATCH_PENDING: 'CREATE_MATCH_PENDING'
 };
 
 function storeReducer(state, action) {
@@ -27,6 +28,9 @@ function storeReducer(state, action) {
       return {...state, curTourney: action.payload, curSavedMatches, prevSavedMatches};
     case actions.UPDATE_UI_MATCHES_TAB:
       return {...state, ui: {...state.ui, matchesTab: action.payload}};
+    // case actions.CREATE_MATCH_PENDING:
+      // create match
+
     default:
       console.log('Received unknow action.type');
       return state;

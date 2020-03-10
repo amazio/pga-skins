@@ -1,9 +1,11 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Card, CardActions, CardHeader, Button } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 
-export default function TourneyCard({ tourney }) {
-  const { isCurTourney, isStarted, isFinished, startDate, curRound, roundState } = tourney;
+export default function TourneyCard({tourney, isCurTourney, realHistory}) {
+  const { isStarted, isFinished, startDate, curRound, roundState } = tourney;
+  const history = useHistory();
 
   function getStatus() {
     if (isFinished) {
@@ -14,13 +16,20 @@ export default function TourneyCard({ tourney }) {
       return `Starts on ${startDate}`;
     }
   }
+  
+  
+  function handleNewMatchClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    history.push('/pick-round');
+  }
 
   return (
     <Card variant='outlined' className='margin-bottom-1rem'>
       <CardHeader title={tourney.title} subheader={getStatus()} />
-      {!isCurTourney &&
+      {isCurTourney &&
         <CardActions>
-          <Button variant='contained' startIcon={<Add />} size='small' color='primary'>
+          <Button onClick={handleNewMatchClick} variant='contained' startIcon={<Add />} size='small' color='primary'>
             MATCH
           </Button>
         </CardActions>

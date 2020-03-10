@@ -21,13 +21,13 @@ export default function App() {
   return (
     <StoreProvider.Provider value={{state, dispatch}}>
       <Switch>
-        <Route path='/welcome'>
+        <Route path='/welcome' render={() =>
           <GridNoMenu />
-        </Route>
+        } />
         {/* Routes without bottom menu go above */}
-        <Route path='/'>
+        <Route path='/' render={() =>
           <GridWithBottomMenu />
-        </Route>
+        } />
       </Switch>
     </StoreProvider.Provider>
   );

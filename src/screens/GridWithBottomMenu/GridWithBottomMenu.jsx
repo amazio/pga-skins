@@ -12,9 +12,9 @@ function GridWithBottomMenu() {
       <TopBar />
       <Box className='GWBM_content'>
         <Switch>
-          <Route path='/'>
+          <Route path='/' render={() =>
             <MatchesScreen />
-          </Route>
+          } />
         </Switch>
       </Box>
       <BottomNav />

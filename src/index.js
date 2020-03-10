@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 
 /*--- hack to fix 100vh on mobile issue ---*/
@@ -45,9 +45,11 @@ const theme = createMuiTheme(themeMint, 'Minty Green');
 
 ReactDOM.render(
   <Router>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <Route path='/' render={() =>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    } />
   </Router>
   , document.getElementById('root')
 );
