@@ -1,21 +1,40 @@
-import React, {useState} from 'react';
-import {BottomNavigation, BottomNavigationAction} from '@material-ui/core';
-import {Settings, GolfCourse} from '@material-ui/icons';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import { Settings, GolfCourse } from '@material-ui/icons';
+import { set } from 'mongoose';
 
-function BottomNav() {
-  const [routeScreen, setRouteScreen] = useState('matches');
+export default function BottomNav() {
+  const history = useHistory();
+  const [selected, setSelected] = useState('');
+  let {pathname} = useLocation();
+
+  useEffect(function() {
+    if (pathname === '/') {
+      setSelected('matches');
+    } else if (pathname === '/settings') {
+      setSelected('settings');
+    } else {
+      // Don't select Matches or Settings icon
+      setSelected('');
+    }
+  }, [pathname]);
 
   function handleChangeRoute(e, newRoute) {
-    if (newRoute === routeScreen) return;
-    setRouteScreen(newRoute);
+    switch (newRoute) {
+      case 'matches':
+        history.push('/');
+        break;
+      case 'settings':
+        history.push('/settings');
+        break;
+    }
   }
 
   return (
-    <BottomNavigation value={routeScreen} onChange={handleChangeRoute} showLabels>
+    <BottomNavigation value={selected} onChange={handleChangeRoute} showLabels>
       <BottomNavigationAction value='matches' label='Matches' icon={<GolfCourse />} />
       <BottomNavigationAction value='settings' label='Settings' icon={<Settings />} />
     </BottomNavigation>
   );
 } 
-
-export default BottomNav;
