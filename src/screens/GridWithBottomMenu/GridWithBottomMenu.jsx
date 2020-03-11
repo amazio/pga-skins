@@ -3,6 +3,7 @@ import './GridWithBottomMenu.css';
 import {Route, Switch} from 'react-router-dom';
 import {Box} from '@material-ui/core';
 import MatchesScreen from '../MatchesScreen/MatchesScreen';
+import NewMatchScreen from '../NewMatchScreen/NewMatchScreen';
 import TopBar from '../../components/TopBar/TopBar';
 import BottomNav from '../../components/BottomNav/BottomNav';
 
@@ -12,6 +13,9 @@ function GridWithBottomMenu() {
       <TopBar />
       <Box className='GWBM_content'>
         <Switch>
+          <Route path='/matches/new' render={() =>
+            <NewMatchScreen />
+          } />
           <Route path='/' render={() =>
             <MatchesScreen />
           } />
