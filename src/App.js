@@ -12,8 +12,8 @@ export default function App() {
   const [state, dispatch] = useReducer(storeReducer, initialState);
   
   useEffect(function () {
-    // Fetch the initial cur tourney, afterwards it will be updated via socket.io
-    tourneyService.subscribeToTourneyUpdates(dispatch);
+    // Fetch the cur tourney every hour
+    tourneyService.setCurTourney(dispatch, 1000 * 60 * 60);
     // init will return true if this is the first visit for the device
     if (userService.init(dispatch)) history.push('/welcome');
   }, []);
