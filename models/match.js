@@ -21,7 +21,7 @@ const playerSchema = new Schema({
   round: roundSchema
 });
 
-const skinMatchSchema = new Schema({
+const matchSchema = new Schema({
   tourneyId: {type: Schema.Types.ObjectId, required: true},
   tourneyTitle: String,
   roundNum: Number,
@@ -31,3 +31,5 @@ const skinMatchSchema = new Schema({
 }, {
   timestamps: true
 });
+
+module.exports = mongoose.model('Match', matchSchema);

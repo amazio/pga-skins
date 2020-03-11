@@ -1,17 +1,16 @@
-import {actions} from '../reducers/store-reducer';
+import { actions } from '../reducers/store-reducer';
+import messages from './socketMessages';
 
-const CUR_TOURNEY_ENDPOINT = process.env.REACT_APP_CUR_TOURNEY_ENDPOINT;
+const socket = window.io();
 
 export default {
-  setCurTourney
+  subscribeToTourneyUpdates
 };
 
-async function setCurTourney(dispatch, freqMS) {
-  const tourney = await getCurTourney();
-  dispatch({type: actions.UPDATE_CUR_TOURNEY, payload: tourney});
-  setTimeout(() => setCurTourney(dispatch, freqMS), freqMS);
+function subscribeToTourneyUpdates(dispatch) {
+  socket.on(messages.UPDATE_TOURNEY, function(tourney) {
+    dispatch({type: actions.UPDATE_CUR_TOURNEY, payload: tourney});
+  });
+  socket.emit(messages.REQUEST_UPDATED_TOURNEY);
 }
 
-function getCurTourney() {
-  return fetch(CUR_TOURNEY_ENDPOINT).then(res => res.json());
-}

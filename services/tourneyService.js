@@ -1,5 +1,3 @@
-const io = require('../io');
-
 // Cache the latest updated tourney
 let curTourney;
 
@@ -15,3 +13,4 @@ function getCurrent() {
 function update(tourney) {
   curTourney = tourney;
 }
+
