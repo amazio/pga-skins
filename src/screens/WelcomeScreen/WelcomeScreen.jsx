@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import StoreProvider from '../../contexts/StoreProvider';
 import {Button, TextField, Typography} from '@material-ui/core';
-import userService from '../../services/userService';
+import settingsService from '../../services/settingsService';
 
 function WelcomeScreen(props) {
   const history = useHistory();
@@ -10,7 +10,7 @@ function WelcomeScreen(props) {
   const [username, setUsername] = useState('');
 
   function updateUsername() {
-    userService.updateUsername(username, dispatch);
+    settingsService.updateUsername(username, dispatch);
     history.push('/');
   }
 
