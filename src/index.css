@@ -35,6 +35,10 @@ body {
   margin-bottom: 1rem;
 }
 
+.margin-top-2rem {
+  margin-top: 2rem;
+}
+
 .margin-left-auto {
   margin-left: auto !important;
 }

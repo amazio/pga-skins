@@ -1,16 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
-import { List, ListItem, Typography } from '@material-ui/core';
+import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
 import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner';
+import RoundPicker from '../../components/RoundPicker/RoundPicker';
 
 export default function NewMatchScreen() {
   const {state} = useContext(StoreProvider);
-  const {curTourney} = state;
+  const {curTourney, settings} = state;
+  const [formData, setFormData] = useState({round: 1});
+
+  function handleChangeRound(a, b) {
+    console.log(a, b);
+  }
 
   return (
     curTourney ?
       <>
-        <Typography variant='h1'>New Match</Typography>
+        <Card variant='outlined' className='margin-bottom-1rem'>
+          <CardHeader title='New Match' subheader={curTourney.title} />
+          <CardContent>
+            <RoundPicker selectedRound='1' onChange={handleChangeRound}/>
+          </CardContent>
+        </Card>
       </>
       :
       <CenteredSpinner />

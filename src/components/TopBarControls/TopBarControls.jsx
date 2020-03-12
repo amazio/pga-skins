@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import ButtonSave from '../ButtonSave/ButtonSave';
+import ButtonCancel from '../ButtonCancel/ButtonCancel';
 import StoreProvider from '../../contexts/StoreProvider';
 
 export default function TopBarControls() {
@@ -11,10 +12,13 @@ export default function TopBarControls() {
   const {pathname} = useLocation();
   const history = useHistory();
 
-  function saveMatch() {
-    console.log('save match clicked');
+  function handleSaveMatch() {
     history.push('/');
   }
+
+  function handleCancelNewMatch() {
+    history.goBack();
+  } 
 
   switch (pathname) {
     case '/':
@@ -23,7 +27,10 @@ export default function TopBarControls() {
         :
         null;
     case '/matches/new':
-      return <ButtonSave handleClick={saveMatch} />
+      return <span>
+        <ButtonCancel handleCancel={handleCancelNewMatch} />&nbsp;
+        <ButtonSave handleClick={handleSaveMatch} />
+      </span>;
     case '/settings':
     default:
       return null;
