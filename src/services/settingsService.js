@@ -24,7 +24,9 @@ function init(dispatch) {
   if (settings) {
     const deviceId = settings[DEVICE_SUBKEY];
     const username = settings[USERNAME_SUBKEY];
-    dispatch({type: actions.UPDATE_SETTINGS, payload: {deviceId, username}});
+    const moneyPerSkin = settings[MONEY_PER_SKIN_SUBKEY];
+    const carrySkins = settings[CARRY_SKINS_SUBKEY];
+    dispatch({type: actions.UPDATE_SETTINGS, payload: {deviceId, username, moneyPerSkin, carrySkins}});
     return false;
   } else {
     // First visit on this device!

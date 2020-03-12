@@ -24,6 +24,7 @@ export const actions = {
 function storeReducer(state, action) {
   switch(action.type) {
     case actions.UPDATE_SETTINGS:
+      console.log(action.payload)
       const {deviceId, username, moneyPerSkin, carrySkins} = action.payload;
       return {...state, settings: {deviceId, username, moneyPerSkin, carrySkins}};
     case actions.UPDATE_USERNAME:
