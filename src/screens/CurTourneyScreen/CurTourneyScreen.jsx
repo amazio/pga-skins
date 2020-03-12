@@ -20,7 +20,7 @@ export default function CurTourneyScreen() {
               </ListItem>
             </List>
           :
-            <Typography variant='body1'>No Matches</Typography>
+            <Typography variant='body1'>You Have No Matches</Typography>
         }
       </>
       :

@@ -5,7 +5,7 @@ import { Settings, GolfCourse } from '@material-ui/icons';
 
 export default function BottomNav() {
   const history = useHistory();
-  let {pathname} = useLocation();
+  const {pathname} = useLocation();
   return (
     <BottomNavigation value={pathname} onChange={(e, newRoute) => history.push(newRoute)} showLabels>
       <BottomNavigationAction value='/' label='Matches' icon={<GolfCourse />} />
