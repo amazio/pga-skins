@@ -3,6 +3,7 @@ import StoreProvider from '../../contexts/StoreProvider';
 import { Card, CardHeader, CardContent, Divider, TextField, FormControlLabel, Switch } from '@material-ui/core';
 import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner';
 import RoundPicker from '../../components/RoundPicker/RoundPicker';
+import SelectPlayers from '../../components/SelectPlayers/SelectPlayers';
 
 function getDefaultRound(tourney) {
   console.log(tourney)
@@ -15,13 +16,13 @@ function getDefaultRound(tourney) {
 export default function NewMatchScreen() {
   const { state } = useContext(StoreProvider);
   const { curTourney, settings } = state;
-  console.log(settings)
-  const [matchData, setMatchData] = useState({});
+  const [matchData, setMatchData] = useState({selectedPlayerIds: []});
 
   useEffect(function () {
     setMatchData({
       ...matchData,
       deviceId: settings.deviceId,
+      username: settings.username,
       round: curTourney && getDefaultRound(curTourney),
       moneyPerSkin: settings.moneyPerSkin,
       carrySkins: settings.carrySkins
@@ -40,6 +41,10 @@ export default function NewMatchScreen() {
     setMatchData({ ...matchData, carrySkins: e.target.checked });
   }
 
+  function handleChangePlayers(e, selectedPlayers) {
+    setMatchData({...matchData, selectedPlayerIds: selectedPlayers.map(p => p.playerId)});
+  }
+
   return (
     curTourney ?
       <>
@@ -51,9 +56,10 @@ export default function NewMatchScreen() {
             <TextField label='Money Per Skin' type='number' variant='outlined' min='1' step='1' margin='normal'
               value={matchData.moneyPerSkin} onChange={handleChangeMoney} color='primary'
             />
-            <FormControlLabel margin='normal' label='Carry Over Skins?' color='primary'
-              control={<Switch checked={matchData.carrySkins} onChange={handleChangeCarry} />}
+            <FormControlLabel margin='normal' label='Carry Over Skins?'
+              control={<Switch checked={matchData.carrySkins} onChange={handleChangeCarry} value='' color='primary' />}
             />
+            <SelectPlayers leaderboard={curTourney.leaderboard} onChange={handleChangePlayers} />
           </CardContent>
         </Card>
       </>
