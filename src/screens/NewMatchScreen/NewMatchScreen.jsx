@@ -15,7 +15,7 @@ function getDefaultRound(tourney) {
 export default function NewMatchScreen() {
   const { state, dispatch } = useContext(StoreProvider);
   const { curTourney, settings } = state;
-  const [matchData, setMatchData] = useState({carrySkins: true, selectedPlayerIds: []});
+  const [matchData, setMatchData] = useState({carrySkins: true, moneyPerSkin: 5, round: 1, selectedPlayerIds: []});
 
   const matchDataInvalid = getMatchDataInvalid();
 
