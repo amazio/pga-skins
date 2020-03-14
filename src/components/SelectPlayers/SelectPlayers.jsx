@@ -10,7 +10,7 @@ export default function SelectPlayers({ leaderboard, onChange }) {
 
   return (
     <Autocomplete multiple autoComplete autoHighlight filterSelectedOptions
-      style={{width: '100%'}}
+      style={{width: '100%', marginBottom: '5rem'}}
       options={options.current}
       getOptionLabel={player => player.name}
       onChange={onChange}
