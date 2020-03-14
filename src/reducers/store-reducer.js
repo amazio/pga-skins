@@ -27,7 +27,6 @@ export const actions = {
 function storeReducer(state, action) {
   switch(action.type) {
     case actions.UPDATE_SETTINGS:
-      console.log(action.payload)
       const {deviceId, username, moneyPerSkin, carrySkins} = action.payload;
       return {...state, settings: {deviceId, username, moneyPerSkin, carrySkins}};
     case actions.UPDATE_USERNAME:
@@ -38,7 +37,6 @@ function storeReducer(state, action) {
     case actions.UPDATE_UI_MATCHES_TAB:
       return {...state, ui: {...state.ui, matchesTab: action.payload}};
     case actions.UPDATE_UI_SAVE_BTN:
-      console.log(action.payload)
       return {...state, ui: {...state.ui, saveBtnDisabled: action.payload}};
 
 

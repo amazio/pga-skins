@@ -4,6 +4,6 @@ import { CancelOutlined } from '@material-ui/icons';
 
 export default function ButtonCancel({handleCancel}) {
   return (
-    <Button onClick={handleCancel} startIcon={<CancelOutlined />} size='small' style={{color: 'white'}}>CANCEL</Button>
+    <Button onClick={handleCancel} startIcon={<CancelOutlined />} variant='outlined' size='small'>CANCEL</Button>
   );
 }

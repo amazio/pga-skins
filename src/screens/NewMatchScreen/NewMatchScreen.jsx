@@ -15,12 +15,11 @@ function getDefaultRound(tourney) {
 export default function NewMatchScreen() {
   const { state, dispatch } = useContext(StoreProvider);
   const { curTourney, settings } = state;
-  const [matchData, setMatchData] = useState({selectedPlayerIds: []});
+  const [matchData, setMatchData] = useState({carrySkins: true, selectedPlayerIds: []});
 
   const matchDataInvalid = getMatchDataInvalid();
 
   useEffect(function () {
-    console.log('running NewMatchScreen useEffect')
     setMatchData({
       ...matchData,
       deviceId: settings.deviceId,
@@ -56,8 +55,6 @@ export default function NewMatchScreen() {
   function handleChangePlayers(e, selectedPlayers) {
     setMatchData({...matchData, selectedPlayerIds: selectedPlayers.map(p => p.playerId)});
   }
-
-  // dispatch({type: actions.UPDATE_UI_SAVE_BTN, payload: true});
 
   return (
     curTourney ?

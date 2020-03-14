@@ -7,7 +7,7 @@ import ButtonCancel from '../ButtonCancel/ButtonCancel';
 import StoreProvider from '../../contexts/StoreProvider';
 
 export default function TopBarControls() {
-  const {state, dispatch} = useContext(StoreProvider);
+  const {state} = useContext(StoreProvider);
   const {ui} = state;
   const {pathname} = useLocation();
   const history = useHistory();
@@ -23,7 +23,7 @@ export default function TopBarControls() {
   switch (pathname) {
     case '/':
       return ui.matchesTab === 'current' ?
-        <Button onClick={() => history.push('/matches/new')} startIcon={<Add />} size='small' style={{color: 'white'}}>MATCH</Button>
+        <Button onClick={() => history.push('/matches/new')} startIcon={<Add />} variant='outlined' size='small'>MATCH</Button>
         :
         null;
     case '/matches/new':

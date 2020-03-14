@@ -4,7 +4,7 @@ import { SaveOutlined } from '@material-ui/icons';
 
 export default function ButtonSave({handleClick, disabled}) {
   return (
-    <Button startIcon={<SaveOutlined />} size='small' style={{color: 'white'}}
+    <Button startIcon={<SaveOutlined />} variant='outlined' size='small' 
       onClick={handleClick} disabled={disabled}
     >
       SAVE
