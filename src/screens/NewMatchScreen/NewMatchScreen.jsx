@@ -19,6 +19,7 @@ export default function NewMatchScreen() {
   const [matchData, setMatchData] = useState({selectedPlayerIds: []});
 
   useEffect(function () {
+    console.log('running NewMatchScreen useEffect')
     setMatchData({
       ...matchData,
       deviceId: settings.deviceId,
@@ -34,7 +35,7 @@ export default function NewMatchScreen() {
   }
 
   function handleChangeMoney(e) {
-    setMatchData({ ...matchData, moneyPerSkin: parseInt(e.target.value) });
+    setMatchData({ ...matchData, moneyPerSkin: e.target.value ? parseInt(e.target.value) : ''});
   }
 
   function handleChangeCarry(e) {

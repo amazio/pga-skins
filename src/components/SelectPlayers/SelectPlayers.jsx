@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 
 export default function SelectPlayers({ leaderboard, onChange }) {
-  const options = leaderboard.map(p => ({name: p.name, playerId: p.playerId}));
+
+  const options = useRef(leaderboard
+    .map(p => ({name: p.name, playerId: p.playerId}))
+    .sort((p1, p2) => p1.name < p2.name ? -1 : 1));
 
   return (
     <Autocomplete multiple autoComplete autoHighlight filterSelectedOptions
-      options={options}
+      options={options.current}
       getOptionLabel={player => player.name}
       onChange={onChange}
       renderInput={params => (
@@ -20,4 +23,5 @@ export default function SelectPlayers({ leaderboard, onChange }) {
       )}
     />
   );
+
 }
