@@ -10,7 +10,10 @@ export const initialState = {
   curTourney: null,
   curSavedMatches: null,
   prevSavedMatches: null,
-  ui: {matchesTab: 'current'}
+  ui: {
+    matchesTab: 'current',
+    saveBtnDisabled: false
+  }
 };
 
 export const actions = {
@@ -18,7 +21,7 @@ export const actions = {
   UPDATE_USERNAME: 'UPDATE_USERNAME',
   UPDATE_CUR_TOURNEY: 'UPDATE_CUR_TOURNEY',
   UPDATE_UI_MATCHES_TAB: 'UPDATE_UI_MATCHES_TAB',
-  // CREATE_MATCH_PENDING: 'CREATE_MATCH_PENDING'
+  UPDATE_UI_SAVE_BTN: 'UPDATE_UI_SAVE_BTN'
 };
 
 function storeReducer(state, action) {
@@ -34,11 +37,13 @@ function storeReducer(state, action) {
       return {...state, curTourney: action.payload, curSavedMatches, prevSavedMatches};
     case actions.UPDATE_UI_MATCHES_TAB:
       return {...state, ui: {...state.ui, matchesTab: action.payload}};
-    // case actions.CREATE_MATCH_PENDING:
-      // create match
+    case actions.UPDATE_UI_SAVE_BTN:
+      console.log(action.payload)
+      return {...state, ui: {...state.ui, saveBtnDisabled: action.payload}};
+
 
     default:
-      console.log('Received unknow action.type');
+      console.log('Received unknow action.type', action.type);
       return state;
   }
 }

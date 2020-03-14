@@ -1,22 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
-import { Card, CardHeader, CardContent, Divider, TextField, FormControlLabel, Switch } from '@material-ui/core';
+import { actions } from '../../reducers/store-reducer';
+import { CardHeader, CardContent, TextField, FormControlLabel, Switch } from '@material-ui/core';
 import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner';
 import RoundPicker from '../../components/RoundPicker/RoundPicker';
 import SelectPlayers from '../../components/SelectPlayers/SelectPlayers';
 
 function getDefaultRound(tourney) {
-  console.log(tourney)
   if (!tourney.isStarted) return '1';
   if (tourney.isFinished) return '4';
-  console.log(tourney.curRound, tourney.curRound.toString())
   return tourney.curRound.toString();
 }
 
 export default function NewMatchScreen() {
-  const { state } = useContext(StoreProvider);
+  const { state, dispatch } = useContext(StoreProvider);
   const { curTourney, settings } = state;
   const [matchData, setMatchData] = useState({selectedPlayerIds: []});
+
+  const matchDataInvalid = getMatchDataInvalid();
 
   useEffect(function () {
     console.log('running NewMatchScreen useEffect')
@@ -29,6 +30,16 @@ export default function NewMatchScreen() {
       carrySkins: settings.carrySkins
     });
   }, [curTourney, settings]);
+
+  useEffect(function() {
+    dispatch({type: actions.UPDATE_UI_SAVE_BTN, payload: matchDataInvalid});
+  }, [matchDataInvalid]);
+
+  function getMatchDataInvalid() {
+    let {moneyPerSkin, selectedPlayerIds} = matchData;
+    moneyPerSkin = parseInt(moneyPerSkin);
+    return (selectedPlayerIds.length < 2) || isNaN(moneyPerSkin) || (moneyPerSkin < 0);
+  }
 
   function handleChangeRound(e, round) {
     setMatchData({ ...matchData, round });
@@ -46,23 +57,22 @@ export default function NewMatchScreen() {
     setMatchData({...matchData, selectedPlayerIds: selectedPlayers.map(p => p.playerId)});
   }
 
+  // dispatch({type: actions.UPDATE_UI_SAVE_BTN, payload: true});
+
   return (
     curTourney ?
       <>
-        <Card variant='outlined' className='margin-bottom-1rem'>
-          <CardHeader title='New Match' subheader={curTourney.title} />
-          <Divider />
-          <CardContent>
-            <RoundPicker round={matchData.round} onChange={handleChangeRound} color='primary' />
-            <TextField label='Money Per Skin' type='number' variant='outlined' min='1' step='1' margin='normal'
-              value={matchData.moneyPerSkin} onChange={handleChangeMoney} color='primary'
-            />
-            <FormControlLabel margin='normal' label='Carry Over Skins?'
-              control={<Switch checked={matchData.carrySkins} onChange={handleChangeCarry} value='' color='primary' />}
-            />
-            <SelectPlayers leaderboard={curTourney.leaderboard} onChange={handleChangePlayers} />
-          </CardContent>
-        </Card>
+        <CardHeader title='New Match' subheader={curTourney.title} />
+        <CardContent className='flex-col-ctr'>
+          <RoundPicker round={matchData.round} onChange={handleChangeRound} color='primary' />
+          <TextField label='Money Per Skin' type='number' variant='outlined' min='1' step='1' margin='normal'
+            value={matchData.moneyPerSkin} onChange={handleChangeMoney} color='primary'
+          />
+          <FormControlLabel margin='normal' label='Carry Over Skins?' className='MuiFormLabel-root'
+            control={<Switch checked={matchData.carrySkins} onChange={handleChangeCarry} value='' color='primary' />}
+          />
+          <SelectPlayers leaderboard={curTourney.leaderboard} onChange={handleChangePlayers} />
+        </CardContent>
       </>
       :
       <CenteredSpinner />

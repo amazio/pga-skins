@@ -37,6 +37,13 @@ const themeMint = {
       "root": {
         backgroundColor: '#d5dcd6'
       }
+    },
+    MuiRadio: {
+      "root": {
+        "&$checked": {
+          "color": "#d5dcd6"
+        }
+      }
     }
   }
 };

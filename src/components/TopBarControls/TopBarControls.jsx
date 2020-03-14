@@ -29,7 +29,7 @@ export default function TopBarControls() {
     case '/matches/new':
       return <span>
         <ButtonCancel handleCancel={handleCancelNewMatch} />&nbsp;
-        <ButtonSave handleClick={handleSaveMatch} />
+        <ButtonSave handleClick={handleSaveMatch} disabled={ui.saveBtnDisabled} />
       </span>;
     case '/settings':
     default:

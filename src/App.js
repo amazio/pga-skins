@@ -18,6 +18,9 @@ export default function App() {
     if (settingsService.init(dispatch)) history.push('/welcome');
   }, []);
 
+  console.log('TODO: remove window.dispatch')
+  window.dispatch = dispatch;
+
   return (
     <StoreProvider.Provider value={{state, dispatch}}>
       <Switch>
