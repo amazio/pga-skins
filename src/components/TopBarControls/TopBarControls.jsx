@@ -5,6 +5,7 @@ import { Add } from '@material-ui/icons';
 import ButtonSave from '../ButtonSave/ButtonSave';
 import ButtonCancel from '../ButtonCancel/ButtonCancel';
 import StoreProvider from '../../contexts/StoreProvider';
+import realtimeService from '../../services/realtimeService';
 
 export default function TopBarControls() {
   const {state} = useContext(StoreProvider);
@@ -13,7 +14,9 @@ export default function TopBarControls() {
   const history = useHistory();
 
   function handleCreateMatch() {
-    history.push('/');
+    realtimeService.createMatch(state.newMatchData, function(err, matchDoc) {
+      console.log('error: ', err, 'matchDoc: ', matchDoc)
+    });
   }
 
   function handleCancelNewMatch() {

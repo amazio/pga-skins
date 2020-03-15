@@ -65,7 +65,7 @@ export default function NewMatchScreen() {
       <>
         <CardHeader title='New Match' subheader={curTourney.title} />
         <CardContent className='flex-col-ctr'>
-          <RoundPicker round={matchData.round} onChange={handleChangeRound} color='primary' />
+          <RoundPicker round={matchData.roundNum} onChange={handleChangeRound} color='primary' />
           <TextField label='Money Per Skin' type='number' variant='outlined' min='1' step='1' margin='normal'
             value={matchData.moneyPerSkin} onChange={handleChangeMoney} color='primary'
           />

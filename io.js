@@ -4,15 +4,21 @@ const messages = require('./services/socketMessages');
 
 io.on('connection', function(socket) {
 
-  socket.on(message.CREATE_MATCH, async function(matchData, cb) {
+  socket.on(messages.CREATE_MATCH, async function(matchData, cb) {
     try {
-      //TODO:  matchData will have selectedPlayerIds, but need to transform this into players with name and playerId before creating
-      // const matchDoc = await realtimeService.createMatch(matchData);
-      let matchDoc = {testMatchDoc: true}
+      const matchDoc = await realtimeService.createMatch(matchData);
+      // TODO:  add match to tracking
+      // TODO:  add this socket to room named using matchDoc.id
+      // TODO:  put matchDoc.id on socket object, ie., socket.matchId = matchDoc.id
       cb(null, matchDoc);
     } catch(e) {
       cb(e);
     }
+  });
+
+  io.on('disconnect', function() {
+    // TODO:  remove socket from room with socket.matchId
+    // TODO:  if room has no more sockets, remove matchDoc from tracking
   });
   
 });
