@@ -1,12 +1,25 @@
-const io = require('../io');
 const tourneyService = require('./tourneyService');
 const matchService = require('./matchService');
-const messages = require('./socketMessages');
 
 module.exports = {
   createMatch,
   getCurrentTourney,
+  addMatchToViewing,
+  getMatchViewing,
+  removeMatchFromViewing
 };
+
+function removeMatchFromViewing(matchId) {
+  matchService.removeMatchFromViewing(matchId);
+}
+
+function getMatchViewing(matchId) {
+  return matchService.getMatchViewing(matchId);
+}
+
+function addMatchToViewing(matchDoc) {
+  matchService.addMatchToViewing(matchDoc);
+}
 
 function createMatch(matchData) {
   // matchData will have selectedPlayerIds so need to transform

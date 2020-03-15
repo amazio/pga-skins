@@ -7,6 +7,8 @@ io.on('connection', function(socket) {
   socket.on(messages.CREATE_MATCH, async function(matchData, cb) {
     try {
       const matchDoc = await realtimeService.createMatch(matchData);
+      // Add matchDoc to tracking because a START_VIEWING_MATCH is coming next
+      realtimeService.addMatchToViewing(matchDoc);
       // Just send back matchDoc._id to client.
       // Client will then route to the view match screen and send
       // the START_VIEWING_MATCH message 
@@ -16,18 +18,42 @@ io.on('connection', function(socket) {
     }
   });
 
-  socket.on(messages.START_VIEWING_MATCH, function(matchId) {
-    // TODO:  add match to tracking
-    // TODO:  add this socket to room named using matchDoc.id
-    // TODO:  put matchDoc.id on socket object, ie., socket.matchId = matchDoc.id
+  socket.on(messages.START_VIEWING_MATCH, async function(matchId) {
+    // Will get matchDoc from tracking if exists, otherwise will query for it
+    let matchDoc = await realtimeService.getMatchViewing(matchId);
+    // Add this socket to room for the viewed match
+    socket.join(matchId);
+    // Put viewing match's id on socket object for cleanup
+    socket.viewingMatchId = matchId;
     
     // TODO: testing below
-    socket.emit(messages.UPDATE_VIEWING_MATCH, {tourneyTitle: 'Test Tourney Title', roundNum: 1});
+    socket.emit(messages.UPDATE_VIEWING_MATCH, matchDoc);
   });
 
-  io.on('disconnect', function() {
-    // TODO:  remove socket from room with socket.matchId
-    // TODO:  if room has no more sockets, remove matchDoc from tracking
+  socket.on(messages.STOP_VIEWING_MATCH, function(matchId) {
+    delete socket.viewingMatchId;
+    // Remove this socket from room for the viewed match
+    socket.leave(matchId, function() {
+      // If room has no more sockets, remove from tracking so that no
+      // further updates will be calculated and emitted for this match
+      io.of(matchId).clients(function(err, clients) {
+        if (!clients.length) realtimeService.removeMatchFromViewing(matchId);
+      });
+    });
+  });
+
+  socket.on('disconnect', function() {
+    const matchId = socket.viewingMatchId;
+    // Leave room if viewing match
+    if (matchId) {
+      socket.leave(matchId, function() {
+        // If room has no more sockets, remove from tracking so that no
+        // further updates will be calculated and emitted for this match
+        io.of(matchId).clients(function(err, clients) {
+          if (!clients.length) realtimeService.removeMatchFromViewing(matchId);
+        });
+      });
+    }
   });
   
 });

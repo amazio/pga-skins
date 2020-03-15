@@ -15,6 +15,10 @@ export default function ViewMatchScreen() {
     // Sends a 'VIEW_MATCH' message to server.
     // viewingMatch state will be updated each time server sends UPDATE_VIEWING_MATCH message
     realtimeService.viewMatch(id, dispatch);
+    // Return a cleanup function to let the server know we're no longer viewing the match
+    return function() {
+      realtimeService.stopViewingMatch(id);
+    }
   }, []);
 
   return (

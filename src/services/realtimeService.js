@@ -8,13 +8,19 @@ let savedDispatch;
 
 export default {
   createMatch,
-  viewMatch
+  viewMatch,
+  stopViewingMatch
 };
 
 /*--- Emitters ---*/
 function viewMatch(matchId, dispatch) {
   savedDispatch = dispatch;
   socket.emit(messages.START_VIEWING_MATCH, matchId);
+}
+
+function stopViewingMatch(matchId) {
+  socket.emit(messages.STOP_VIEWING_MATCH, matchId);
+  savedDispatch();
 }
 
 function createMatch(matchData, cb) {

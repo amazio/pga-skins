@@ -1,9 +1,29 @@
 const Match = require('../models/match');
 
+const viewingMatches = {};
+
 module.exports = {
   create,
-  computeSkins
+  computeSkins,
+  addMatchToViewing,
+  getMatchViewing,
+  removeMatchFromViewing
 };
+
+function removeMatchFromViewing(matchId) {
+  delete viewingMatches[matchId];
+}
+
+async function getMatchViewing(matchId) {
+  if (viewingMatches[matchId]) return Promise.resolve(viewingMatches[matchId]);
+  const matchDoc = await Match.findById(matchId);
+  addMatchToViewing(matchDoc);
+  return Promise.resolve(matchDoc);
+}
+
+function addMatchToViewing(matchDoc) {
+  viewingMatches[matchDoc.id] = matchDoc;
+}
 
 function create(matchData) {
   return Match.create(matchData);
