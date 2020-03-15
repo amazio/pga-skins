@@ -11,6 +11,7 @@ export const initialState = {
   curSavedMatches: null,
   prevSavedMatches: null,
   newMatchData: {},
+  viewingMatch: null,
   ui: {
     matchesTab: 'current',
     saveBtnDisabled: false
@@ -22,6 +23,7 @@ export const actions = {
   UPDATE_USERNAME: 'UPDATE_USERNAME',
   UPDATE_CUR_TOURNEY: 'UPDATE_CUR_TOURNEY',
   UPDATE_NEW_MATCH_DATA: 'UPDATE_NEW_MATCH_DATA',
+  UPDATE_VIEWING_MATCH: 'UPDATE_VIEWING_MATCH',
   UPDATE_UI_MATCHES_TAB: 'UPDATE_UI_MATCHES_TAB',
   UPDATE_UI_SAVE_BTN: 'UPDATE_UI_SAVE_BTN'
 };
@@ -37,6 +39,8 @@ function storeReducer(state, action) {
       return {...state, curTourney: action.payload, curSavedMatches, prevSavedMatches};
     case actions.UPDATE_NEW_MATCH_DATA:
       return {...state, newMatchData: {...state.newMatchData, ...action.payload}};
+    case actions.UPDATE_VIEWING_MATCH:
+      return {...state, viewingMatch: action.payload};
     case actions.UPDATE_UI_MATCHES_TAB:
       return {...state, ui: {...state.ui, matchesTab: action.payload}};
     case actions.UPDATE_UI_SAVE_BTN:

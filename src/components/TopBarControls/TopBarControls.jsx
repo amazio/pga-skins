@@ -14,8 +14,8 @@ export default function TopBarControls() {
   const history = useHistory();
 
   function handleCreateMatch() {
-    realtimeService.createMatch(state.newMatchData, function(err, matchDoc) {
-      console.log('error: ', err, 'matchDoc: ', matchDoc)
+    realtimeService.createMatch(state.newMatchData, function(err, matchId) {
+      history.push(`/matches/${matchId}`);
     });
   }
 
