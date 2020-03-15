@@ -14,21 +14,24 @@ function getDefaultRound(tourney) {
 
 export default function NewMatchScreen() {
   const { state, dispatch } = useContext(StoreProvider);
-  const { curTourney, settings } = state;
-  const [matchData, setMatchData] = useState({carrySkins: true, moneyPerSkin: 5, round: 1, selectedPlayerIds: []});
+  const { curTourney, settings, newMatchData: matchData } = state;
 
   const matchDataInvalid = getMatchDataInvalid();
-
-  useEffect(function () {
-    setMatchData({
-      ...matchData,
-      deviceId: settings.deviceId,
-      username: settings.username,
-      round: curTourney && getDefaultRound(curTourney),
-      moneyPerSkin: settings.moneyPerSkin,
-      carrySkins: settings.carrySkins
+  
+  // Initialize newMatchData in store
+  useEffect(function() {
+    if (!curTourney) return;
+    const {deviceId, username, carrySkins, moneyPerSkin} = settings;
+    const {_id: tourneyId, title: tourneyTitle} = curTourney;
+    dispatch({
+      type: actions.UPDATE_NEW_MATCH_DATA,
+      payload: {
+        deviceId, username, carrySkins, moneyPerSkin,
+        tourneyId, tourneyTitle,
+        roundNum: getDefaultRound(curTourney)
+      }
     });
-  }, [curTourney, settings]);
+  }, [curTourney]);
 
   useEffect(function() {
     dispatch({type: actions.UPDATE_UI_SAVE_BTN, payload: matchDataInvalid});
@@ -36,28 +39,29 @@ export default function NewMatchScreen() {
 
   function getMatchDataInvalid() {
     let {moneyPerSkin, selectedPlayerIds} = matchData;
+    if (!selectedPlayerIds) return true;
     moneyPerSkin = parseInt(moneyPerSkin);
     return (selectedPlayerIds.length < 2) || isNaN(moneyPerSkin) || (moneyPerSkin < 0);
   }
 
-  function handleChangeRound(e, round) {
-    setMatchData({ ...matchData, round });
+  function handleChangeRound(e, roundNum) {
+    dispatch({type: actions.UPDATE_NEW_MATCH_DATA, payload: {roundNum}});
   }
-
+  
   function handleChangeMoney(e) {
-    setMatchData({ ...matchData, moneyPerSkin: e.target.value ? parseInt(e.target.value) : ''});
+    dispatch({type: actions.UPDATE_NEW_MATCH_DATA, payload: {moneyPerSkin: e.target.value ? parseInt(e.target.value) : ''}});
   }
-
+  
   function handleChangeCarry(e) {
-    setMatchData({ ...matchData, carrySkins: e.target.checked });
+    if (e.target) dispatch({type: actions.UPDATE_NEW_MATCH_DATA, payload: {carrySkins: e.target.checked}});
   }
-
+  
   function handleChangePlayers(e, selectedPlayers) {
-    setMatchData({...matchData, selectedPlayerIds: selectedPlayers.map(p => p.playerId)});
+    dispatch({type: actions.UPDATE_NEW_MATCH_DATA, payload: {selectedPlayerIds: selectedPlayers.map(p => p.playerId)}});
   }
 
   return (
-    curTourney ?
+    curTourney && matchData.carrySkins !== undefined ?
       <>
         <CardHeader title='New Match' subheader={curTourney.title} />
         <CardContent className='flex-col-ctr'>
@@ -66,7 +70,7 @@ export default function NewMatchScreen() {
             value={matchData.moneyPerSkin} onChange={handleChangeMoney} color='primary'
           />
           <FormControlLabel margin='normal' label='Carry Over Skins?' className='MuiFormLabel-root'
-            control={<Switch checked={matchData.carrySkins} onChange={handleChangeCarry} value='' color='primary' />}
+            control={<Switch value='carrySkins' checked={matchData.carrySkins} onChange={handleChangeCarry} color='primary' />}
           />
           <SelectPlayers leaderboard={curTourney.leaderboard} onChange={handleChangePlayers} />
         </CardContent>

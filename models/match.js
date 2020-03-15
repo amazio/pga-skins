@@ -10,7 +10,6 @@ const holeSchema = new Schema({
 
 const roundSchema = new Schema({
   num: Number,
-  strokes: {type: Number, default: null},
   holes: [holeSchema]
 }, {_id: false});
 
@@ -22,6 +21,8 @@ const playerSchema = new Schema({
 });
 
 const matchSchema = new Schema({
+  deviceId: {type: Number, required: true},
+  username: {type: String},
   tourneyId: {type: Schema.Types.ObjectId, required: true},
   tourneyTitle: String,
   roundNum: Number,

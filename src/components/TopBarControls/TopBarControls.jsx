@@ -12,7 +12,7 @@ export default function TopBarControls() {
   const {pathname} = useLocation();
   const history = useHistory();
 
-  function handleSaveMatch() {
+  function handleCreateMatch() {
     history.push('/');
   }
 
@@ -29,7 +29,7 @@ export default function TopBarControls() {
     case '/matches/new':
       return <span>
         <ButtonCancel handleCancel={handleCancelNewMatch} />&nbsp;
-        <ButtonSave handleClick={handleSaveMatch} disabled={ui.saveBtnDisabled} />
+        <ButtonSave handleClick={handleCreateMatch} disabled={ui.saveBtnDisabled} />
       </span>;
     case '/settings':
     default:
