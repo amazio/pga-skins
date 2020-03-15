@@ -2,9 +2,21 @@ export default {
   getSavedMatches,
   getMatchesByTourneyId,
   getCurAndPrevSavedMatches,
+  updateSavedMatch
 };
 
 const MATCHES_KEY = 'matches';
+
+function updateSavedMatch(matchDoc) {
+  const savedMatches = getSavedMatches();
+  const matchIdx = savedMatches.findIndex(m => m._id === matchDoc._id);
+  if (matchIdx === -1) {
+    savedMatches.push(matchDoc);
+  } else {
+    savedMatches[matchIdx] = matchDoc;
+  }
+  window.localStorage.setItem(MATCHES_KEY, JSON.stringify(savedMatches));
+}
 
 function getCurAndPrevSavedMatches(curTourneyId) {
   const allSavedMatches = getSavedMatches();

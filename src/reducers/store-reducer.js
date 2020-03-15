@@ -41,6 +41,7 @@ function storeReducer(state, action) {
     case actions.UPDATE_NEW_MATCH_DATA:
       return {...state, newMatchData: {...state.newMatchData, ...action.payload}};
     case actions.UPDATE_VIEWING_MATCH:
+      matchService.updateSavedMatch(action.payload);
       // Ensure that match is being viewed before updating
       const path = window.location.pathname;
       const matchId = path.substring(path.lastIndexOf('/') + 1);
