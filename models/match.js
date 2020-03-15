@@ -17,7 +17,8 @@ const playerSchema = new Schema({
   name: String,
   playerId: String,
   thru: {type: String, default: null},
-  round: roundSchema
+  round: roundSchema,
+  money: {type: Number, default: 0}
 });
 
 const matchSchema = new Schema({

@@ -22,6 +22,17 @@ function computeSkins(matchData, leaderboard) {
     updateHoleForSkins(matchData.players, holeIdx);
   }
   if (matchData.carrySkins) updateMatchForCarrys(matchData.players);
+  computeMoney(matchData.players, matchData.moneyPerSkin);
+}
+
+function computeMoney(players, moneyPerSkin) {
+  const numPlayers = players.length;
+  const playersHoles = players.map(p => p.round.holes);
+  const playerTotals = playersHoles.map(playerHoles => playerHoles.reduce((count, h) => h.skin || h.carry ? count + 1 : count, 0));
+  const totalSkins = playerTotals.reduce((count, playerTotal) => count + playerTotal, 0);
+  players.forEach((player, idx) => {
+    player.money = ((playerTotals[idx] * numPlayers) - totalSkins) * moneyPerSkin;
+  });
 }
 
 function updateMatchForCarrys(players) {
