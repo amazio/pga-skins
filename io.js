@@ -9,17 +9,20 @@ io.on('connection', function(socket) {
       const matchDoc = await realtimeService.createMatch(matchData);
       // Just send back matchDoc._id to client.
       // Client will then route to the view match screen and send
-      // the VIEW_MATCH message 
+      // the START_VIEWING_MATCH message 
       cb(null, matchDoc.id);
     } catch(e) {
       cb(e);
     }
   });
 
-  socket.on(messages.VIEW_MATCH, function() {
+  socket.on(messages.START_VIEWING_MATCH, function(matchId) {
     // TODO:  add match to tracking
     // TODO:  add this socket to room named using matchDoc.id
     // TODO:  put matchDoc.id on socket object, ie., socket.matchId = matchDoc.id
+    
+    // TODO: testing below
+    socket.emit(messages.UPDATE_VIEWING_MATCH, {tourneyTitle: 'Test Tourney Title', roundNum: 1});
   });
 
   io.on('disconnect', function() {
