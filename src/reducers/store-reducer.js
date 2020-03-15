@@ -41,15 +41,19 @@ function storeReducer(state, action) {
     case actions.UPDATE_NEW_MATCH_DATA:
       return {...state, newMatchData: {...state.newMatchData, ...action.payload}};
     case actions.UPDATE_VIEWING_MATCH:
-      return {...state, viewingMatch: action.payload};
+      // Ensure that match is being viewed before updating
+      const path = window.location.pathname;
+      const matchId = path.substring(path.lastIndexOf('/') + 1);
+      return matchId === action.payload._id ?
+        {...state, viewingMatch: action.payload}
+        :
+        state;
     case actions.STOP_VIEWING_MATCH:
       return {...state, viewingMatch: {}};
     case actions.UPDATE_UI_MATCHES_TAB:
       return {...state, ui: {...state.ui, matchesTab: action.payload}};
     case actions.UPDATE_UI_SAVE_BTN:
       return {...state, ui: {...state.ui, saveBtnDisabled: action.payload}};
-
-
     default:
       console.log('Received unknow action.type', action.type);
       return state;
