@@ -22,7 +22,8 @@ function computeSkins(matchData, leaderboard) {
     updateHoleForSkins(matchData.players, holeIdx);
   }
   if (matchData.carrySkins) updateMatchForCarrys(matchData.players);
-  computeMoney(matchData.players, matchData.moneyPerSkin);
+  // computeMoney returns the whether or not the match is complete
+  matchData.completed = computeMoney(matchData.players, matchData.moneyPerSkin);
 }
 
 function computeMoney(players, moneyPerSkin) {
@@ -33,6 +34,8 @@ function computeMoney(players, moneyPerSkin) {
   players.forEach((player, idx) => {
     player.money = ((playerTotals[idx] * numPlayers) - totalSkins) * moneyPerSkin;
   });
+  // return whether or not the match is completed
+  return !playersHoles.some(playerHoles => playerHoles.some(h => h.strokes === null));
 }
 
 function updateMatchForCarrys(players) {
