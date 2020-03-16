@@ -11,7 +11,7 @@ function updateSavedMatch(matchDoc) {
   const savedMatches = getSavedMatches();
   const matchIdx = savedMatches.findIndex(m => m._id === matchDoc._id);
   if (matchIdx === -1) {
-    savedMatches.push(matchDoc);
+    savedMatches.unshift(matchDoc);
   } else {
     savedMatches[matchIdx] = matchDoc;
   }
