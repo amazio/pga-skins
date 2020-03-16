@@ -17,6 +17,7 @@ function updateAllMatchesBeingViewed() {
   let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney._id);
   for (let match of matches) {
     matchService.computeSkins(match, tourney.leaderboard);
+    match.save();
     matchService.addMatchToViewing(match);
     matchService.notifyClientsOfUpdatedMatch(match);
   }
