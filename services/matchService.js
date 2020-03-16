@@ -1,28 +1,47 @@
+// const io = require('../io');
+const messages = require('./socketMessages');
 const Match = require('../models/match');
 
-const viewingMatches = {};
+const viewingMatchesForCurTourney = {};
 
 module.exports = {
   create,
   computeSkins,
   addMatchToViewing,
   getMatchViewing,
-  removeMatchFromViewing
+  removeMatchFromViewing,
+  cleanupAndGetAllMatchesBeingViewed,
+  notifyClientsOfUpdatedMatch
 };
 
-function removeMatchFromViewing(matchId) {
-  delete viewingMatches[matchId];
+function notifyClientsOfUpdatedMatch(match) {
+  global.io.to(match.id).emit(messages.UPDATE_VIEWING_MATCH, match);
 }
 
-async function getMatchViewing(matchId) {
-  if (viewingMatches[matchId]) return Promise.resolve(viewingMatches[matchId]);
+function cleanupAndGetAllMatchesBeingViewed(tourneyId) {
+  // Before returning matches being viewed for the currently
+  // updated tourney, remove any stragler matches not for cur tourney
+  const matches = Object.values(viewingMatchesForCurTourney);
+  for (let match of matches) {
+    if (match.tourneyId !== tourneyId) delete viewingMatchesForCurTourney[match.id];
+  }
+  return matches;
+}
+
+function removeMatchFromViewing(matchId) {
+  delete viewingMatchesForCurTourney[matchId];
+}
+
+async function getMatchViewing(matchId, curTourneyId) {
+  if (viewingMatchesForCurTourney[matchId]) return Promise.resolve(viewingMatchesForCurTourney[matchId]);
   const matchDoc = await Match.findById(matchId);
-  addMatchToViewing(matchDoc);
+  // Only add if match requested is for cur tourney (going to be updated)
+  if (matchDoc.tourneyId.equals(curTourneyId)) addMatchToViewing(matchDoc);
   return Promise.resolve(matchDoc);
 }
 
 function addMatchToViewing(matchDoc) {
-  viewingMatches[matchDoc.id] = matchDoc;
+  viewingMatchesForCurTourney[matchDoc.id] = matchDoc;
 }
 
 function create(matchData) {

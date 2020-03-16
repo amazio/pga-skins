@@ -2,6 +2,8 @@ const io = require('socket.io')();
 const realtimeService = require('./services/realtimeService');
 const messages = require('./services/socketMessages');
 
+global.io = io;
+
 io.on('connection', function(socket) {
 
   socket.on(messages.CREATE_MATCH, async function(matchData, cb) {
@@ -25,8 +27,6 @@ io.on('connection', function(socket) {
     socket.join(matchId);
     // Put viewing match's id on socket object for cleanup
     socket.viewingMatchId = matchId;
-    
-    // TODO: testing below
     socket.emit(messages.UPDATE_VIEWING_MATCH, matchDoc);
   });
 
@@ -36,9 +36,8 @@ io.on('connection', function(socket) {
     socket.leave(matchId, function() {
       // If room has no more sockets, remove from tracking so that no
       // further updates will be calculated and emitted for this match
-      io.of(matchId).clients(function(err, clients) {
-        if (!clients.length) realtimeService.removeMatchFromViewing(matchId);
-      });
+      const numClients = Object.keys(io.nsps[`/${matchid}`].sockets).length;
+      if (!numClients) realtimeService.removeMatchFromViewing(matchId);
     });
   });
 
@@ -49,9 +48,8 @@ io.on('connection', function(socket) {
       socket.leave(matchId, function() {
         // If room has no more sockets, remove from tracking so that no
         // further updates will be calculated and emitted for this match
-        io.of(matchId).clients(function(err, clients) {
-          if (!clients.length) realtimeService.removeMatchFromViewing(matchId);
-        });
+        const numClients = Object.keys(io.nsps[`/${matchid}`].sockets).length;
+        if (!numClients) realtimeService.removeMatchFromViewing(matchId);
       });
     }
   });

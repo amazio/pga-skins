@@ -20,7 +20,7 @@ function viewMatch(matchId, dispatch) {
 
 function stopViewingMatch(matchId) {
   socket.emit(messages.STOP_VIEWING_MATCH, matchId);
-  savedDispatch();
+  savedDispatch({type: actions.STOP_VIEWING_MATCH});
 }
 
 function createMatch(matchData, cb) {

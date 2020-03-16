@@ -4,17 +4,31 @@ const matchService = require('./matchService');
 module.exports = {
   createMatch,
   getCurrentTourney,
+  updateCurrentTourney,
   addMatchToViewing,
   getMatchViewing,
-  removeMatchFromViewing
+  removeMatchFromViewing,
+  updateAllMatchesBeingViewed
 };
+
+function updateAllMatchesBeingViewed() {
+  const tourney = getCurrentTourney();
+  // matches will be an array
+  let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney._id);
+  for (let match of matches) {
+    matchService.computeSkins(match, tourney.leaderboard);
+    matchService.addMatchToViewing(match);
+    matchService.notifyClientsOfUpdatedMatch(match);
+  }
+}
 
 function removeMatchFromViewing(matchId) {
   matchService.removeMatchFromViewing(matchId);
 }
 
 function getMatchViewing(matchId) {
-  return matchService.getMatchViewing(matchId);
+  const curTourneyId = tourneyService.getCurrent()._id;
+  return matchService.getMatchViewing(matchId, curTourneyId);
 }
 
 function addMatchToViewing(matchDoc) {
@@ -31,4 +45,8 @@ function createMatch(matchData) {
 
 function getCurrentTourney() {
   return tourneyService.getCurrent();
+}
+
+function updateCurrentTourney(tourney) {
+  tourneyService.update(tourney);
 }

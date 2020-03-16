@@ -1,4 +1,4 @@
-const tourneyService = require('../services/tourneyService');
+const realtimeService = require('../services/realtimeService');
 
 module.exports = {
   current,
@@ -6,13 +6,14 @@ module.exports = {
 };
 
 function current(req, res) {
-  res.json(tourneyService.getCurrent());
+  res.json(realtimeService.getCurrentTourney());
 }
 
 // This is called by pga-polling.managerincharge.com via
 // subscription whenever the current tourney has been updated
 function update(req, res) {
-  tourneyService.update(req.body);
+  realtimeService.updateCurrentTourney(req.body);
+  setTimeout(() => realtimeService.updateAllMatchesBeingViewed());
   // send minimum response to pga-polling.managerincharge.com
   res.json({tourneyUpdated: new Date()});
 }
