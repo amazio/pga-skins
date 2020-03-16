@@ -36,8 +36,13 @@ io.on('connection', function(socket) {
     socket.leave(matchId, function() {
       // If room has no more sockets, remove from tracking so that no
       // further updates will be calculated and emitted for this match
-      const numClients = Object.keys(io.nsps[`/${matchid}`].sockets).length;
-      if (!numClients) realtimeService.removeMatchFromViewing(matchId);
+      const nsp = io.nsps[`/${matchId}`];
+      if (!nsp) {
+        realtimeService.removeMatchFromViewing(matchId);
+      } else {
+        const numClients = Object.keys(nsp.sockets).length;
+        if (!numClients) realtimeService.removeMatchFromViewing(matchId);
+      }
     });
   });
 
@@ -48,8 +53,13 @@ io.on('connection', function(socket) {
       socket.leave(matchId, function() {
         // If room has no more sockets, remove from tracking so that no
         // further updates will be calculated and emitted for this match
-        const numClients = Object.keys(io.nsps[`/${matchid}`].sockets).length;
-        if (!numClients) realtimeService.removeMatchFromViewing(matchId);
+        const nsp = io.nsps[`/${matchId}`];
+        if (!nsp) {
+          realtimeService.removeMatchFromViewing(matchId);
+        } else {
+          const numClients = Object.keys(nsp.sockets).length;
+          if (!numClients) realtimeService.removeMatchFromViewing(matchId);
+        }
       });
     }
   });

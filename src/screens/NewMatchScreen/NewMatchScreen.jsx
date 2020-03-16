@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
 import { actions } from '../../reducers/store-reducer';
 import { CardHeader, CardContent, TextField, FormControlLabel, Switch } from '@material-ui/core';
@@ -31,11 +31,11 @@ export default function NewMatchScreen() {
         roundNum: getDefaultRound(curTourney)
       }
     });
-  }, [curTourney]);
+  }, [curTourney, dispatch, settings]);
 
   useEffect(function() {
     dispatch({type: actions.UPDATE_UI_SAVE_BTN, payload: matchDataInvalid});
-  }, [matchDataInvalid]);
+  }, [matchDataInvalid, dispatch]);
 
   function getMatchDataInvalid() {
     let {moneyPerSkin, selectedPlayerIds} = matchData;

@@ -19,7 +19,7 @@ export default function ViewMatchScreen() {
     return function() {
       realtimeService.stopViewingMatch(id);
     }
-  }, []);
+  }, [id, dispatch]);
 
   return (
     viewingMatch ?
