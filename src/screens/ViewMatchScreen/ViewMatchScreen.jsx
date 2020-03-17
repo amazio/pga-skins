@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import StoreProvider from '../../contexts/StoreProvider';
 import realtimeService from '../../services/realtimeService';
-import { List, ListItem, Typography } from '@material-ui/core';
 import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner';
 import MatchCard from '../../components/MatchCard/MatchCard';
 

@@ -1,26 +1,23 @@
 import React, { useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
-import { List, ListItem, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner';
 import TourneyCard from '../../components/TourneyCard/TourneyCard';
+import MatchList from '../../components/MatchList/MatchList';
 
 export default function CurTourneyScreen() {
-  const {state} = useContext(StoreProvider);
-  const {curTourney, curSavedMatches: matches} = state;
+  const { state } = useContext(StoreProvider);
+  const { curTourney, curSavedMatches: matches } = state;
 
   return (
     curTourney ?
       <>
         <TourneyCard tourney={curTourney} isCurTourney={true} />
-        { 
+        {
           matches.length ?
-            <List>
-              <ListItem>
-
-              </ListItem>
-            </List>
-          :
-            <Typography variant='body1' style={{marginTop: '2rem'}}>You Have No Matches</Typography>
+            <MatchList matches={matches} tourneyRound={curTourney.roundNum}/>
+            :
+            <Typography variant='body1' style={{ marginTop: '2rem' }}>You Have No Matches</Typography>
         }
       </>
       :

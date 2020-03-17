@@ -1,0 +1,21 @@
+.MatchItem-Card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
+  grid-gap: .25rem;
+  margin: .5rem 1rem;
+  padding: .5rem;
+}
+
+.MatchItem-Card section:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.MatchItem-Card section:nth-child(2) {
+  margin: .5rem 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

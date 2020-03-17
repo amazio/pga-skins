@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader } from '@material-ui/core';
+import { CardHeader } from '@material-ui/core';
 
 export default function TourneyCard({tourney, isCurTourney}) {
   const { isStarted, isFinished, startDate, curRound, roundState } = tourney;
@@ -15,8 +15,6 @@ export default function TourneyCard({tourney, isCurTourney}) {
   }
 
   return (
-    <Card variant='outlined' className='margin-bottom-1rem'>
-      <CardHeader title={tourney.title} subheader={getStatus()} />
-    </Card>
+    <CardHeader title={tourney.title} subheader={getStatus()} className='margin-bottom-1rem'/>
   );
 }
