@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import StoreProvider from '../../contexts/StoreProvider';
 import realtimeService from '../../services/realtimeService';
-import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner';
 import MatchCard from '../../components/MatchCard/MatchCard';
+import { Typography } from '@material-ui/core';
 
 export default function ViewMatchScreen() {
   const { id } = useParams();
@@ -24,6 +24,6 @@ export default function ViewMatchScreen() {
     viewingMatch ?
       <MatchCard match={viewingMatch} />
       :
-      <CenteredSpinner />
+      <Typography variant='body1' style={{ marginTop: '2rem' }}>Sorry<br/>Match No Longer Exists</Typography>
   );
 }

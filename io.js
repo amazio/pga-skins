@@ -16,10 +16,10 @@ io.on('connection', function(socket) {
       const matchDoc = await realtimeService.createMatch(matchData);
       // Add matchDoc to tracking because a START_VIEWING_MATCH is coming next
       realtimeService.addMatchToViewing(matchDoc);
-      // Just send back matchDoc._id to client.
+      // Just send back match
       // Client will then route to the view match screen and send
       // the START_VIEWING_MATCH message 
-      cb(null, matchDoc.id);
+      cb(null, matchDoc);
     } catch(e) {
       cb(e);
     }

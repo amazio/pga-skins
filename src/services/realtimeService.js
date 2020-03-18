@@ -19,7 +19,6 @@ function syncMatchesWithServer(dispatch) {
   // cache the store's dispatch function
   savedDispatch = dispatch;
   const localMatchIds = matchService.getSavedMatches().map(m => m._id);
-  console.log(localMatchIds)
   // Server will return the matches still existing in the db
   // Client will then cleanup/sync its matches locally in the callback
   socket.emit(messages.SYNC_MATCHES, localMatchIds, function(matchesOnServer) {
@@ -29,7 +28,9 @@ function syncMatchesWithServer(dispatch) {
 
 function viewMatch(matchId, dispatch) {
   savedDispatch = dispatch;
-  socket.emit(messages.START_VIEWING_MATCH, matchId);
+  socket.emit(messages.START_VIEWING_MATCH, matchId, function(matchExists) {
+    if (!matchExists) savedDispatch({type: actions.STOP_VIEWING_MATCH});
+  });
 }
 
 function stopViewingMatch(matchId) {

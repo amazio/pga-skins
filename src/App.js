@@ -12,9 +12,9 @@ export default function App() {
   const history = useHistory();
   const [state, dispatch] = useReducer(storeReducer, initialState);
   
-  useEffect(function () {
+  useEffect(async function () {
     // Fetch the cur tourney every hour
-    tourneyService.setCurTourney(dispatch, 1000 * 60 * 60);
+    await tourneyService.setCurTourney(dispatch, 1000 * 60 * 60);
     realtimeService.syncMatchesWithServer(dispatch);
     // init will return true if this is the first visit for the device
     if (settingsService.init(dispatch)) history.push('/welcome');

@@ -57,7 +57,7 @@ function storeReducer(state, action) {
       var [curSavedMatches, prevSavedMatches] = matchService.getCurAndPrevSavedMatches(state.curTourney._id);
       return {...state, curSavedMatches, prevSavedMatches};
     case actions.STOP_VIEWING_MATCH:
-      return {...state, viewingMatch: {}};
+      return {...state, viewingMatch: null};
     case actions.UPDATE_UI_MATCHES_TAB:
       return {...state, ui: {...state.ui, matchesTab: action.payload}};
     case actions.UPDATE_UI_SAVE_BTN:
