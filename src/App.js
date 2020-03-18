@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import StoreProvider from './contexts/StoreProvider';
 import storeReducer, { initialState } from './reducers/store-reducer';
+import realtimeService from './services/realtimeService';
 import settingsService from './services/settingsService';
 import tourneyService from './services/tourneyService';
 import GridWithBottomMenu from './screens/GridWithBottomMenu/GridWithBottomMenu';
@@ -14,6 +15,7 @@ export default function App() {
   useEffect(function () {
     // Fetch the cur tourney every hour
     tourneyService.setCurTourney(dispatch, 1000 * 60 * 60);
+    realtimeService.syncMatchesWithServer(dispatch);
     // init will return true if this is the first visit for the device
     if (settingsService.init(dispatch)) history.push('/welcome');
   }, []);

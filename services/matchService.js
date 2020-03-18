@@ -11,8 +11,13 @@ module.exports = {
   getMatchViewing,
   removeMatchFromViewing,
   cleanupAndGetAllMatchesBeingViewed,
-  notifyClientsOfUpdatedMatch
+  notifyClientsOfUpdatedMatch,
+  getAllMatchesForIds
 };
+
+function getAllMatchesForIds(matchIds) {
+  return Match.where('_id').in(matchIds).exec();
+}
 
 function notifyClientsOfUpdatedMatch(match) {
   global.io.to(match.id).emit(messages.UPDATE_VIEWING_MATCH, match);

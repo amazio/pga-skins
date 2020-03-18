@@ -1,5 +1,6 @@
 import messages from './socketMessages';
 import { actions } from '../reducers/store-reducer';
+import matchService from './matchService';
 
 const socket = window.io();
 
@@ -7,12 +8,25 @@ const socket = window.io();
 let savedDispatch;
 
 export default {
+  syncMatchesWithServer,
   createMatch,
   viewMatch,
   stopViewingMatch
 };
 
 /*--- Emitters ---*/
+function syncMatchesWithServer(dispatch) {
+  // cache the store's dispatch function
+  savedDispatch = dispatch;
+  const localMatchIds = matchService.getSavedMatches().map(m => m._id);
+  console.log(localMatchIds)
+  // Server will return the matches still existing in the db
+  // Client will then cleanup/sync its matches locally in the callback
+  socket.emit(messages.SYNC_MATCHES, localMatchIds, function(matchesOnServer) {
+    savedDispatch({type: actions.SET_ALL_MATCHES, payload: matchesOnServer});
+  });
+}
+
 function viewMatch(matchId, dispatch) {
   savedDispatch = dispatch;
   socket.emit(messages.START_VIEWING_MATCH, matchId);

@@ -1,11 +1,17 @@
 export default {
   getSavedMatches,
+  setSavedMatches,
   getMatchesByTourneyId,
   getCurAndPrevSavedMatches,
   updateSavedMatch
 };
 
 const MATCHES_KEY = 'matches';
+
+// Used to sync with matches that exist on server (may have been deleted)
+function setSavedMatches(matches) {
+  window.localStorage.setItem(MATCHES_KEY, JSON.stringify(matches));
+}
 
 function updateSavedMatch(matchDoc) {
   const savedMatches = getSavedMatches();

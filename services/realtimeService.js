@@ -3,6 +3,7 @@ const matchService = require('./matchService');
 
 module.exports = {
   createMatch,
+  getAllMatchesThatExistOnClient,
   getCurrentTourney,
   updateCurrentTourney,
   addMatchToViewing,
@@ -10,6 +11,12 @@ module.exports = {
   removeMatchFromViewing,
   updateAllMatchesBeingViewed
 };
+
+// Client wants to sync with server upon loading since
+// server may have deleted some docs that client has in localStorage
+function getAllMatchesThatExistOnClient(matchIds) {
+  return matchService.getAllMatchesForIds(matchIds);
+}
 
 function updateAllMatchesBeingViewed() {
   const tourney = getCurrentTourney();
