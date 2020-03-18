@@ -16,9 +16,9 @@ export default function MatchItem({match, tourneyRound}) {
   createdMsg.splice(createdMsg.length - 6, 3).join('');
   
   return (
-    <Card variant='outlined' className='MatchItem-Card'>
+    <Card variant='outlined' className='MatchItem-card'>
       <section>
-        <Typography variant='h5' component='h2'>Round {match.roundNum}</Typography>
+        <Typography variant='h5' style={{fontSize: '1.25rem'}}>Round {match.roundNum}</Typography>
         <article>
           <Typography variant='overline'>
             ${match.moneyPerSkin}/skin ({statusMsg})
@@ -26,7 +26,7 @@ export default function MatchItem({match, tourneyRound}) {
         </article>
       </section>
       <section>
-        {match.players.map(p => <PlayerChip player={p} />)}
+        {match.players.map(p => <PlayerChip player={p} key={p.playerId} />)}
       </section>
       <section>
         <Typography variant='caption'>Created by {match.username} on {createdMsg}</Typography>

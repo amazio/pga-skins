@@ -1,4 +1,4 @@
-.MatchItem-Card {
+.MatchItem-card {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto;
@@ -7,15 +7,16 @@
   padding: .5rem;
 }
 
-.MatchItem-Card section:first-child {
+.MatchItem-card section:first-child {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.MatchItem-Card section:nth-child(2) {
+.MatchItem-card section:nth-child(2) {
   margin: .5rem 0;
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
 }

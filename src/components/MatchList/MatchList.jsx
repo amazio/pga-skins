@@ -5,7 +5,7 @@ export default function MatchList({matches, tourneyRound}) {
   
   return (
     <>
-      {matches.map(m => <MatchItem match={m} tourneyRound={tourneyRound}/>)}
+      {matches.map(m => <MatchItem match={m} tourneyRound={tourneyRound} key={m._id} />)}
     </>
   );
 
