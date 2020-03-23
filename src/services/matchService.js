@@ -14,6 +14,7 @@ function setSavedMatches(matches) {
 }
 
 function updateSavedMatch(matchDoc) {
+  if (!matchDoc) return;
   const savedMatches = getSavedMatches();
   const matchIdx = savedMatches.findIndex(m => m._id === matchDoc._id);
   if (matchIdx === -1) {

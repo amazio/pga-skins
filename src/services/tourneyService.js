@@ -6,10 +6,9 @@ export default {
   setCurTourney
 };
 
-async function setCurTourney(dispatch, freqMS) {
+async function setCurTourney(dispatch) {
   const tourney = await getCurTourney();
   dispatch({type: actions.UPDATE_CUR_TOURNEY, payload: tourney});
-  setTimeout(() => setCurTourney(dispatch, freqMS), freqMS);
 }
 
 function getCurTourney() {

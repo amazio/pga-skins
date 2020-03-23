@@ -1,0 +1,38 @@
+#match-grid {
+  display: grid;
+  grid-template-columns: 1.25fr repeat(9, 1fr);
+  margin: .5rem .25rem;
+  grid-gap: .5rem;
+}
+
+#match-grid .hole {
+  color: rgba(5, 25, 7, 0.87);
+  border-bottom: .08rem solid var(--light-green);
+}
+
+#match-grid .par {
+  color: rgba(5, 25, 7, 0.87);
+}
+
+#match-grid .MatchGrid-initials {
+  color: rgba(5, 25, 7, 0.87);
+  font-family: "Roboto", "Helvetica";
+  font-size: .875rem;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+#match-grid .MatchGrid-spacer {
+  height: .5rem;
+}
+
+#match-grid span.player-hole {
+  font-family: "Roboto", "Helvetica";
+  font-size: .875rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  border-width: .08rem;
+  border-color: white;
+  border-style: solid;
+}

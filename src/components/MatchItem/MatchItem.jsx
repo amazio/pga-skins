@@ -31,9 +31,6 @@ export default function MatchItem({match, tourneyRound}) {
       <section>
         <Typography variant='caption'>Created by {match.username} on {createdMsg}</Typography>
       </section>
-      
-      
-
     </Card>
   );
 

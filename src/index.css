@@ -7,6 +7,12 @@ body {
   box-sizing: border-box;
 }
 
+:root {
+  --pale-green-bg: #d5dcd6;
+  --dark-green-text: #051907;
+  --light-green: rgba(5, 25, 7, 0.52);
+}
+
 #root {
   height: 100%;
 }

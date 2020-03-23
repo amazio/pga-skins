@@ -8,7 +8,7 @@ import { Typography } from '@material-ui/core';
 export default function ViewMatchScreen() {
   const { id } = useParams();
   const { state, dispatch } = useContext(StoreProvider);
-  const { viewingMatch } = state;
+  const { viewingMatch, curTourney } = state;
 
   useEffect(function () {
     // Sends a 'VIEW_MATCH' message to server.
@@ -21,8 +21,8 @@ export default function ViewMatchScreen() {
   }, [id, dispatch]);
 
   return (
-    viewingMatch ?
-      <MatchCard match={viewingMatch} />
+    viewingMatch && curTourney ?
+      <MatchCard match={viewingMatch} tourneyRound={curTourney.curRound} />
       :
       <Typography variant='body1' style={{ marginTop: '2rem' }}>Sorry<br/>Match No Longer Exists</Typography>
   );

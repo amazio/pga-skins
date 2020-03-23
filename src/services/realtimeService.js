@@ -8,6 +8,7 @@ const socket = window.io();
 let savedDispatch;
 
 export default {
+  setDispatch,
   syncMatchesWithServer,
   createMatch,
   viewMatch,
@@ -15,15 +16,18 @@ export default {
 };
 
 /*--- Emitters ---*/
-function syncMatchesWithServer(dispatch) {
+function setDispatch(dispatch) {
   // cache the store's dispatch function
   savedDispatch = dispatch;
-  const localMatchIds = matchService.getSavedMatches().map(m => m._id);
-  // Server will return the matches still existing in the db
-  // Client will then cleanup/sync its matches locally in the callback
-  socket.emit(messages.SYNC_MATCHES, localMatchIds, function(matchesOnServer) {
-    savedDispatch({type: actions.SET_ALL_MATCHES, payload: matchesOnServer});
-  });
+}
+
+async function syncMatchesWithServer() {
+    const localMatchIds = matchService.getSavedMatches().map(m => m._id);
+    // Server will return the matches still existing in the db
+    // Client will then cleanup/sync its matches locally in the callback
+    socket.emit(messages.SYNC_MATCHES, localMatchIds, function(matchesOnServer) {
+      savedDispatch({type: actions.SET_ALL_MATCHES, payload: matchesOnServer});
+    });
 }
 
 function viewMatch(matchId, dispatch) {
@@ -44,5 +48,5 @@ function createMatch(matchData, cb) {
 
 /*--- Listeners ---*/
 socket.on(messages.UPDATE_VIEWING_MATCH, function(match) {
-  savedDispatch({type: actions.UPDATE_VIEWING_MATCH, payload: match});
+  if (match) savedDispatch({type: actions.UPDATE_VIEWING_MATCH, payload: match});
 });
