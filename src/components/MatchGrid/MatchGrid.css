@@ -1,7 +1,7 @@
 #match-grid {
   display: grid;
   grid-template-columns: 1.25fr repeat(9, 1fr);
-  margin: .5rem .25rem;
+  margin: .25rem .25rem .5rem;
   grid-gap: .5rem;
 }
 

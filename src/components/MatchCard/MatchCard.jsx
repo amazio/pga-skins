@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, Typography } from '@material-ui/core';
+import { CardHeader, Typography } from '@material-ui/core';
 import MatchGrid from '../../components/MatchGrid/MatchGrid';
 import './MatchCard.css';
 
