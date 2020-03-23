@@ -13,6 +13,7 @@ export default function MatchGrid({match}) {
   const backPars = pars.filter(p => p.holeNum > 9);
   const skins = match.players.map(p => ({
     name: p.name,
+    initials: getInitials(p.name),
     holes: p.round.holes.map((h, idx) =>
       <div className='player-hole-container flex-col-ctr' key={idx}>
         <span className='player-hole flex-col-ctr' style={{
@@ -31,7 +32,7 @@ export default function MatchGrid({match}) {
       {frontPars.map(par => <Typography variant='caption' key={par.holeNum} className='hole'>{par.holeNum}<br/><span className='par'>{par.par}</span></Typography>)}
       {skins.map((p) => (
         <React.Fragment key={p.name}>
-          <div className='MatchGrid-initials flex-col-ctr' key={p.name}>{getInitials(p.name)}</div>
+          <div className='MatchGrid-initials flex-col-ctr' key={p.name}>{p.initials}</div>
           {p.holes.filter((_, idx) => idx < 9)}
         </React.Fragment>
       ))}
@@ -40,7 +41,7 @@ export default function MatchGrid({match}) {
       {backPars.map(par => <Typography variant='caption' key={par.holeNum} className='hole'>{par.holeNum}<br/><span className='par'>{par.par}</span></Typography>)}
       {skins.map((p) => (
         <React.Fragment key={p.name}>
-          <div className='MatchGrid-initials flex-col-ctr' key={p.name}>{getInitials(p.name)}</div>
+          <div className='MatchGrid-initials flex-col-ctr' key={p.name}>{p.initials}</div>
           {p.holes.filter((_, idx) => idx > 8)}
         </React.Fragment>
       ))}

@@ -17,6 +17,10 @@ body {
   height: 100%;
 }
 
+a, a:active, a:visited {
+  text-decoration: none !important;
+}
+
 .text-center {
   text-align: center;
 }
