@@ -10,7 +10,8 @@ body {
 :root {
   --pale-green-bg: #d5dcd6;
   --dark-green-text: #051907;
-  --light-green: rgba(5, 25, 7, 0.52);
+  --light-green: rgba(5, 25, 7, 0.54);
+  --light-grey: rgba(0, 0, 0, 0.54);
 }
 
 #root {

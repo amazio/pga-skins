@@ -1,6 +1,7 @@
 import React from 'react';
 import { CardHeader, Typography } from '@material-ui/core';
 import MatchGrid from '../../components/MatchGrid/MatchGrid';
+import MatchSummary from '../../components/MatchSummary/MatchSummary';
 import './MatchCard.css';
 
 export default function MatchCard({match, tourneyRound}) {
@@ -24,6 +25,7 @@ export default function MatchCard({match, tourneyRound}) {
     <>
       <CardHeader title={match.tourneyTitle} subheader={subHeader} />
       <MatchGrid match={match} />
+      <MatchSummary match={match} />
       <Typography variant='caption' id='MatchCard-created-by'>Created by {match.username} on {createdMsg}</Typography>
     </>
   );

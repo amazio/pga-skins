@@ -1,0 +1,11 @@
+.MatchSummary {
+  margin-top: 1rem;
+}
+
+#match-summary-table th {
+  color: var(--light-grey);
+}
+
+#match-summary-table td {
+  color: var(--dark-green-text);
+}

@@ -27,9 +27,10 @@ const matchSchema = new Schema({
   tourneyId: {type: Schema.Types.ObjectId, required: true},
   tourneyTitle: String,
   roundNum: Number,
-  completed: {type: Boolean, default: false},
   moneyPerSkin: {type: Number, default: 5},
-  players: [playerSchema]
+  carrySkins: {type: Boolean, default: true},
+  players: [playerSchema],
+  completed: {type: Boolean, default: false}
 }, {
   timestamps: true
 });

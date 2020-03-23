@@ -7,7 +7,10 @@
 
 #match-grid .hole {
   color: rgba(5, 25, 7, 0.87);
-  border-bottom: .08rem solid var(--light-green);
+  font-size: .62rem;
+  /* border-top: .08rem solid var(--light-green);
+  border-bottom: .08rem solid var(--light-green); */
+  padding-top: 0.2rem;
 }
 
 #match-grid .par {
