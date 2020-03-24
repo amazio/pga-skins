@@ -47,6 +47,7 @@ async function getMatchViewing(matchId, curTourneyId) {
 
 function addMatchToViewing(matchDoc) {
   viewingMatchesForCurTourney[matchDoc.id] = matchDoc;
+  console.log('matchService.addMatchToViewing - viewingMatchesForCurTourney object', viewingMatchesForCurTourney);
 }
 
 function create(matchData) {

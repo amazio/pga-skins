@@ -7,7 +7,8 @@ import MatchList from '../../components/MatchList/MatchList';
 
 export default function CurTourneyScreen() {
   const { state } = useContext(StoreProvider);
-  const { curTourney, curSavedMatches: matches } = state;
+  let { curTourney, savedMatches: matches } = state;
+  if (curTourney) matches = matches.filter(m => m.tourneyId === curTourney._id);
 
   return (
     curTourney ?

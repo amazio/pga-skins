@@ -9,7 +9,6 @@ const holeSchema = new Schema({
 }, {_id: false});
 
 const roundSchema = new Schema({
-  num: Number,
   holes: [holeSchema]
 }, {_id: false});
 
@@ -17,7 +16,7 @@ const playerSchema = new Schema({
   name: String,
   playerId: String,
   thru: {type: String, default: null},
-  round: roundSchema,
+  round: {type: roundSchema, default: {}},
   money: {type: Number, default: 0}
 });
 

@@ -2,7 +2,7 @@ import settingsService from '../services/settingsService';
 import matchService from '../services/matchService';
 
 const settings = settingsService.getSettings();
-const [curSavedMatches, prevSavedMatches] = matchService.getCurAndPrevSavedMatches();
+const savedMatches = matchService.getSavedMatches();
 
 export const initialState = {
   settings: settings || {
@@ -12,8 +12,7 @@ export const initialState = {
     carrySkins: true
   },
   curTourney: null,
-  curSavedMatches: curSavedMatches,
-  prevSavedMatches: prevSavedMatches,
+  savedMatches,
   newMatchData: {},
   viewingMatch: null,
   ui: {
@@ -28,6 +27,7 @@ export const actions = {
   UPDATE_CUR_TOURNEY: 'UPDATE_CUR_TOURNEY',
   UPDATE_NEW_MATCH_DATA: 'UPDATE_NEW_MATCH_DATA',
   UPDATE_VIEWING_MATCH: 'UPDATE_VIEWING_MATCH',
+  CREATE_MATCH: 'CREATE_MATCH',
   SET_ALL_MATCHES: 'SET_ALL_MATCHES',
   STOP_VIEWING_MATCH: 'STOP_VIEWING_MATCH',
   UPDATE_UI_MATCHES_TAB: 'UPDATE_UI_MATCHES_TAB',
@@ -35,15 +35,13 @@ export const actions = {
 };
 
 function storeReducer(state, action) {
-  let curSavedMatches, prevSavedMatches;
   switch(action.type) {
     case actions.UPDATE_SETTINGS:
       return {...state, settings: {...state.settings, ...action.payload}};
     case actions.UPDATE_USERNAME:
       return {...state, settings: {...state.settings, username: action.payload}};
     case actions.UPDATE_CUR_TOURNEY:
-      [curSavedMatches, prevSavedMatches] = matchService.getCurAndPrevSavedMatches(action.payload._id);
-      return {...state, curTourney: action.payload, curSavedMatches, prevSavedMatches};
+      return {...state, curTourney: action.payload};
     case actions.UPDATE_NEW_MATCH_DATA:
       return {...state, newMatchData: {...state.newMatchData, ...action.payload}};
     case actions.UPDATE_VIEWING_MATCH:
@@ -51,14 +49,13 @@ function storeReducer(state, action) {
       return {...state, viewingMatch: action.payload};
     case actions.SET_ALL_MATCHES:
       matchService.setSavedMatches(action.payload);
-      if (state.curTourney) {
-        [curSavedMatches, prevSavedMatches] = matchService.getCurAndPrevSavedMatches(state.curTourney._id);
-        return {...state, curSavedMatches, prevSavedMatches};
-      } else {
-        return {...state};
-      }
+      return {...state, savedMatches: action.payload};
     case actions.STOP_VIEWING_MATCH:
       return {...state, viewingMatch: null};
+    case actions.CREATE_MATCH:
+      matchService.saveNewMatch(action.payload);
+      const savedMatches = matchService.getSavedMatches();
+      return {...state, viewingMatch: action.payload, savedMatches, newMatchData: {}};
     case actions.UPDATE_UI_MATCHES_TAB:
       return {...state, ui: {...state.ui, matchesTab: action.payload}};
     case actions.UPDATE_UI_SAVE_BTN:

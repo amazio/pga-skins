@@ -22,12 +22,12 @@ export default function MatchCard({match, tourneyRound}) {
   </>;
 
   return (
-    <>
+    <main id='match-card'>
       <CardHeader title={match.tourneyTitle} subheader={subHeader} />
       <MatchGrid match={match} />
       <MatchSummary match={match} />
       <Typography variant='caption' id='MatchCard-created-by'>Created by {match.username} on {createdMsg}</Typography>
-    </>
+    </main>
   );
 
 }

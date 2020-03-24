@@ -1,3 +1,8 @@
+#match-card {
+  max-width: 26rem;
+  margin: auto;
+}
+
 #MatchCard-created-by {
   color: rgba(0, 0, 0, 0.54);
   display: inline-block;

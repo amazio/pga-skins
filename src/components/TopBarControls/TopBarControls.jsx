@@ -17,7 +17,7 @@ export default function TopBarControls() {
 
   function handleCreateMatch() {
     realtimeService.createMatch(state.newMatchData, function(err, match) {
-      dispatch({type: actions.UPDATE_VIEWING_MATCH, payload: match});
+      dispatch({type: actions.CREATE_MATCH, payload: match});
       history.push(`/matches/${match._id}`);
     });
   }
