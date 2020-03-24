@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, isWidthDown } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { actions } from '../../reducers/store-reducer';
 import ButtonSave from '../ButtonSave/ButtonSave';
@@ -29,9 +29,10 @@ export default function TopBarControls() {
   switch (pathname) {
     case '/':
       return ui.matchesTab === 'current' ?
-        <Button onClick={() => history.push('/matches/new')} startIcon={<Add />} variant='outlined' size='small'>MATCH</Button>
-        :
-        null;
+      <Button onClick={() => history.push('/matches/new')} startIcon={<Add />} variant='outlined' size='small'>MATCH</Button>
+      :
+      <Button onClick={() => window.localStorage.clear()} variant='outlined' size='small'>TEMP CLEAR LOCALSTORAGE</Button>
+      ;
     case '/matches/new':
       return <span>
         <ButtonCancel handleCancel={handleCancelNewMatch} />&nbsp;
