@@ -3,7 +3,8 @@ export default {
   setSavedMatches,
   getMatchesByTourneyId,
   getCurAndPrevSavedMatches,
-  updateSavedMatch
+  updateSavedMatch,
+  saveNewMatch
 };
 
 const MATCHES_KEY = 'matches';
@@ -11,6 +12,12 @@ const MATCHES_KEY = 'matches';
 // Used to sync with matches that exist on server (may have been deleted)
 function setSavedMatches(matches) {
   window.localStorage.setItem(MATCHES_KEY, JSON.stringify(matches));
+}
+
+function saveNewMatch(matchDoc) {
+  const savedMatches = getSavedMatches();
+  savedMatches.unshift(matchDoc);
+  window.localStorage.setItem(MATCHES_KEY, JSON.stringify(savedMatches));
 }
 
 function updateSavedMatch(matchDoc) {

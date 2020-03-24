@@ -48,13 +48,7 @@ function storeReducer(state, action) {
       return {...state, newMatchData: {...state.newMatchData, ...action.payload}};
     case actions.UPDATE_VIEWING_MATCH:
       matchService.updateSavedMatch(action.payload);
-      // Ensure that match is being viewed before updating
-      const path = window.location.pathname;
-      const matchId = path.substring(path.lastIndexOf('/') + 1);
-      return matchId === action.payload._id ?
-        {...state, viewingMatch: action.payload}
-        :
-        state;
+      return {...state, viewingMatch: action.payload};
     case actions.SET_ALL_MATCHES:
       matchService.setSavedMatches(action.payload);
       if (state.curTourney) {

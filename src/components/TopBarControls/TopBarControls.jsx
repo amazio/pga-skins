@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
+import { actions } from '../../reducers/store-reducer';
 import ButtonSave from '../ButtonSave/ButtonSave';
 import ButtonCancel from '../ButtonCancel/ButtonCancel';
 import StoreProvider from '../../contexts/StoreProvider';
@@ -9,14 +10,14 @@ import realtimeService from '../../services/realtimeService';
 import matchService from '../../services/matchService';
 
 export default function TopBarControls() {
-  const {state} = useContext(StoreProvider);
+  const {state, dispatch} = useContext(StoreProvider);
   const {ui} = state;
   const {pathname} = useLocation();
   const history = useHistory();
 
   function handleCreateMatch() {
     realtimeService.createMatch(state.newMatchData, function(err, match) {
-      matchService.updateSavedMatch(match);
+      dispatch({type: actions.UPDATE_VIEWING_MATCH, payload: match});
       history.push(`/matches/${match._id}`);
     });
   }
