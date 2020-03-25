@@ -30,7 +30,7 @@ export default function TopBarControls() {
     history.goBack();
   }
 
-  function handleShare() {
+  function handleShare(e) {
     inputEl.current.select();
     document.execCommand('copy');
     setShowCopyMsg(true);
@@ -57,7 +57,7 @@ export default function TopBarControls() {
     return <span>
       {deviceId === state.viewingMatch.deviceId && <ButtonDelete handleDelete={handleDelete} />}
       &nbsp;<ButtonShare handleShare={handleShare} />
-      <input ref={inputEl} defaultValue={window.location.href} style={{position: 'absolute', marginTop: -999}} />
+      <input ref={inputEl} onFocus={(e) => e.target.blur()} defaultValue={window.location.href} style={{position: 'absolute', marginTop: -999}} />
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
