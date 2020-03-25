@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Snackbar } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
@@ -12,6 +12,7 @@ import realtimeService from '../../services/realtimeService';
 import settingsService from '../../services/settingsService';
 
 export default function TopBarControls() {
+  const [ showCopyMsg, setShowCopyMsg ] = useState(false);
   const { state, dispatch } = useContext(StoreProvider);
   const { ui } = state;
   const { pathname } = useLocation();
@@ -32,7 +33,7 @@ export default function TopBarControls() {
   function handleShare() {
     inputEl.current.select();
     document.execCommand('copy');
-    console.log('copyied')
+    setShowCopyMsg(true);
   }
 
   function handleDelete() {
@@ -57,6 +58,16 @@ export default function TopBarControls() {
       {deviceId === state.viewingMatch.deviceId && <ButtonDelete handleDelete={handleDelete} />}
       &nbsp;<ButtonShare handleShare={handleShare} />
       <input ref={inputEl} defaultValue={window.location.href} style={{position: 'absolute', marginTop: -999}} />
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={showCopyMsg}
+        onClose={() => setShowCopyMsg(false)}
+        autoHideDuration={3000}
+        message='Copied Match Link to the Clipboard'
+      />
     </span>;
   } else if (pathname === '/settings') {
     return null;
