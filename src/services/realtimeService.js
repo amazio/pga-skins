@@ -12,10 +12,15 @@ export default {
   syncMatchesWithServer,
   createMatch,
   viewMatch,
-  stopViewingMatch
+  stopViewingMatch,
+  deleteMatch
 };
 
 /*--- Emitters ---*/
+function deleteMatch(isOwner) {
+
+}
+
 function setDispatch(dispatch) {
   // cache the store's dispatch function
   savedDispatch = dispatch;

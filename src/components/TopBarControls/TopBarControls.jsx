@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Snackbar } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { actions } from '../../reducers/store-reducer';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import ButtonSave from '../ButtonSave/ButtonSave';
 import ButtonCancel from '../ButtonCancel/ButtonCancel';
 import ButtonShare from '../ButtonShare/ButtonShare';
@@ -13,6 +14,7 @@ import settingsService from '../../services/settingsService';
 
 export default function TopBarControls() {
   const [ showCopyMsg, setShowCopyMsg ] = useState(false);
+  const [ isConfirmDeleteOpen, setIsConfirmDeleteOpen ] = useState(false);
   const { state, dispatch } = useContext(StoreProvider);
   const { ui } = state;
   const { pathname } = useLocation();
@@ -36,8 +38,12 @@ export default function TopBarControls() {
     setShowCopyMsg(true);
   }
 
-  function handleDelete() {
-    console.log('handleDelete')
+  function handleDelete(confirmed) {
+    alert(confirmed)
+    setIsConfirmDeleteOpen(false);
+    // realtimeService.deleteMatch().then(function() {
+    //   history.go('/');
+    // });
   }
 
   if (pathname === '/') {
@@ -54,8 +60,9 @@ export default function TopBarControls() {
   } else if (pathname.startsWith('/matches/')) {
     if (!state.viewingMatch) return null;
     const deviceId = settingsService.getSettings().deviceId;
+    const isMatchOwner = deviceId === state.viewingMatch.deviceId;
     return <span>
-      {deviceId === state.viewingMatch.deviceId && <ButtonDelete handleDelete={handleDelete} />}
+      <ButtonDelete handleDelete={setIsConfirmDeleteOpen} />
       &nbsp;<ButtonShare handleShare={handleShare} />
       <input ref={inputEl} onFocus={(e) => e.target.blur()} defaultValue={window.location.href} style={{position: 'absolute', marginTop: -999}} />
       <Snackbar
@@ -67,6 +74,17 @@ export default function TopBarControls() {
         onClose={() => setShowCopyMsg(false)}
         autoHideDuration={3000}
         message='Copied Match Link to the Clipboard'
+      />
+      <ConfirmDialog
+        isConfirmOpen={isConfirmDeleteOpen}
+        handleClose={handleDelete}
+        title='Confirm Delete'
+        dialogContent={isMatchOwner ?
+          'Permanently delete this match that you created?'
+          :
+          'Remove the match from your list?'
+        }
+        confirmBtnText='Delete Match'
       />
     </span>;
   } else if (pathname === '/settings') {

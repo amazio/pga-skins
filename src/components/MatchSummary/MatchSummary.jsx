@@ -21,6 +21,16 @@ function formatMoney(money) {
   }
 }
 
+function getColor(money) {
+  if (money < 0) {
+    return {color: 'var(--dark-red)'};
+  } else if (money > 0) {
+    return {color: 'var(--green)'};
+  } else {
+    return {color: 'var(--dark-green-text)'};
+  }
+}
+
 export default function MatchSummary({ match }) {
   const players = match.players.map(p => ({
     name: p.name,
@@ -45,7 +55,7 @@ export default function MatchSummary({ match }) {
               <TableCell align='center'>{p.initials}</TableCell>
               <TableCell>{p.name}</TableCell>
               <TableCell align='center'>{p.numSkins}</TableCell>
-              <TableCell align='center'>{formatMoney(p.money)}</TableCell>
+              <TableCell align='center' style={getColor(p.money)}>{formatMoney(p.money)}</TableCell>
             </TableRow>
           )}
         </TableBody>
