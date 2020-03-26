@@ -9,6 +9,7 @@ module.exports = {
   addMatchToViewing,
   getMatchViewing,
   removeMatchFromViewing,
+  deleteMatch,
   updateAllMatchesBeingViewed
 };
 
@@ -41,6 +42,10 @@ function getMatchViewing(matchId) {
 
 function addMatchToViewing(matchDoc) {
   matchService.addMatchToViewing(matchDoc);
+}
+
+function deleteMatch(matchId) {
+  matchService.deleteMatch(matchId);
 }
 
 function createMatch(matchData) {

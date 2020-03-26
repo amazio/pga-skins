@@ -6,7 +6,7 @@ export default function MatchList({matches, tourneyRound}) {
   
   return (
     <>
-      {matches.map(m => <Link to={`/matches/${m._id}`}  key={m._id}><MatchItem match={m} tourneyRound={tourneyRound} /></Link>)}
+      {matches.map(m => <Link to={`/matches/${m._id}`} key={m._id}><MatchItem match={m} tourneyRound={tourneyRound} /></Link>)}
     </>
   );
 

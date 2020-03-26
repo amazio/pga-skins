@@ -28,6 +28,7 @@ export const actions = {
   UPDATE_NEW_MATCH_DATA: 'UPDATE_NEW_MATCH_DATA',
   UPDATE_VIEWING_MATCH: 'UPDATE_VIEWING_MATCH',
   CREATE_MATCH: 'CREATE_MATCH',
+  DELETE_MATCH: 'DELETE_MATCH',
   SET_ALL_MATCHES: 'SET_ALL_MATCHES',
   STOP_VIEWING_MATCH: 'STOP_VIEWING_MATCH',
   UPDATE_UI_MATCHES_TAB: 'UPDATE_UI_MATCHES_TAB',
@@ -56,6 +57,9 @@ function storeReducer(state, action) {
       matchService.saveNewMatch(action.payload);
       const savedMatches = matchService.getSavedMatches();
       return {...state, viewingMatch: action.payload, savedMatches, newMatchData: {}};
+    case actions.DELETE_MATCH:
+      const updatedSavedMatches = matchService.deleteMatch(action.payload);
+      return {...state, savedMatches: updatedSavedMatches, viewingMatch: null};
     case actions.UPDATE_UI_MATCHES_TAB:
       return {...state, ui: {...state.ui, matchesTab: action.payload}};
     case actions.UPDATE_UI_SAVE_BTN:

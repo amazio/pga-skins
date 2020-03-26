@@ -38,12 +38,12 @@ export default function TopBarControls() {
     setShowCopyMsg(true);
   }
 
-  function handleDelete(confirmed) {
-    alert(confirmed)
+  function handleDelete(confirmed, matchId, isMatchOwner) {
     setIsConfirmDeleteOpen(false);
-    // realtimeService.deleteMatch().then(function() {
-    //   history.go('/');
-    // });
+    if (confirmed) {
+      realtimeService.deleteMatch(matchId, isMatchOwner);
+      history.replace('/');
+    }
   }
 
   if (pathname === '/') {
@@ -62,7 +62,7 @@ export default function TopBarControls() {
     const deviceId = settingsService.getSettings().deviceId;
     const isMatchOwner = deviceId === state.viewingMatch.deviceId;
     return <span>
-      <ButtonDelete handleDelete={setIsConfirmDeleteOpen} />
+      <ButtonDelete handleDelete={() => setIsConfirmDeleteOpen(true)} />
       &nbsp;<ButtonShare handleShare={handleShare} />
       <input ref={inputEl} onFocus={(e) => e.target.blur()} defaultValue={window.location.href} style={{position: 'absolute', marginTop: -999}} />
       <Snackbar
@@ -77,7 +77,7 @@ export default function TopBarControls() {
       />
       <ConfirmDialog
         isConfirmOpen={isConfirmDeleteOpen}
-        handleClose={handleDelete}
+        handleClose={(confirmed) => handleDelete(confirmed, state.viewingMatch._id, isMatchOwner)}
         title='Confirm Delete'
         dialogContent={isMatchOwner ?
           'Permanently delete this match that you created?'

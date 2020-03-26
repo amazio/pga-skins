@@ -17,8 +17,9 @@ export default {
 };
 
 /*--- Emitters ---*/
-function deleteMatch(isOwner) {
-
+function deleteMatch(matchId, isMatchOwner) {
+  savedDispatch({type: actions.DELETE_MATCH, payload: matchId});
+  if (isMatchOwner) socket.emit(messages.DELETE_MATCH, matchId);
 }
 
 function setDispatch(dispatch) {

@@ -10,6 +10,7 @@ module.exports = {
   addMatchToViewing,
   getMatchViewing,
   removeMatchFromViewing,
+  deleteMatch,
   cleanupAndGetAllMatchesBeingViewed,
   notifyClientsOfUpdatedMatch,
   getAllMatchesForIds
@@ -35,6 +36,11 @@ function cleanupAndGetAllMatchesBeingViewed(tourneyId) {
 
 function removeMatchFromViewing(matchId) {
   delete viewingMatchesForCurTourney[matchId];
+}
+
+function deleteMatch(matchId) {
+  removeMatchFromViewing(matchId);
+  Match.findByIdAndDelete(matchId).then(() => {});
 }
 
 async function getMatchViewing(matchId, curTourneyId) {

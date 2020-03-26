@@ -50,6 +50,10 @@ io.on('connection', function(socket) {
       }
     });
   });
+  
+  socket.on(messages.DELETE_MATCH, function(matchId) {
+    realtimeService.deleteMatch(matchId);
+  });
 
   socket.on('disconnect', function() {
     const matchId = socket.viewingMatchId;

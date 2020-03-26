@@ -4,7 +4,8 @@ export default {
   // getMatchesByTourneyId,
   // getCurAndPrevSavedMatches,
   updateSavedMatch,
-  saveNewMatch
+  saveNewMatch,
+  deleteMatch
 };
 
 const MATCHES_KEY = 'matches';
@@ -18,6 +19,13 @@ function matchSort(a, b) {
 function setSavedMatches(matches) {
   matches.sort(matchSort);
   window.localStorage.setItem(MATCHES_KEY, JSON.stringify(matches));
+}
+
+function deleteMatch(matchId) {
+  let savedMatches = getSavedMatches();
+  savedMatches = savedMatches.filter(m => m._id !== matchId);
+  window.localStorage.setItem(MATCHES_KEY, JSON.stringify(savedMatches));
+  return savedMatches;
 }
 
 function saveNewMatch(matchDoc) {
