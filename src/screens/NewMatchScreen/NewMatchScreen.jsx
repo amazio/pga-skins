@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import './NewMatchScreen.css';
 import StoreProvider from '../../contexts/StoreProvider';
 import { actions } from '../../reducers/store-reducer';
 import { CardHeader, CardContent, TextField, FormControlLabel, Switch } from '@material-ui/core';
@@ -68,6 +69,7 @@ export default function NewMatchScreen() {
           <RoundPicker round={matchData.roundNum} onChange={handleChangeRound} color='primary' />
           <TextField label='Money Per Skin' type='number' variant='outlined' min='1' step='1' margin='normal'
             value={matchData.moneyPerSkin} onChange={handleChangeMoney} color='primary'
+            id='NewMatchScreen_money_input'
           />
           <FormControlLabel margin='normal' label='Carry Over Skins?' className='MuiFormLabel-root'
             control={<Switch value='carrySkins' checked={matchData.carrySkins} onChange={handleChangeCarry} color='primary' />}
