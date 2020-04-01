@@ -10,7 +10,7 @@ export default function MatchItem({match, tourneyRound}) {
   } else if (match.roundNum === tourneyRound) {
     statusMsg = 'in progress'
   } else {
-    statusMsg = 'pending'
+    statusMsg = tourneyRound === undefined ? 'click to update' : 'pending';
   }
   let createdMsg = new Date(match.createdAt).toLocaleString().split('');
   createdMsg.splice(createdMsg.length - 6, 3).join('');

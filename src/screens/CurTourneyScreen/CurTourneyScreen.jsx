@@ -13,7 +13,7 @@ export default function CurTourneyScreen() {
   return (
     curTourney ?
       <>
-        <TourneyCard tourney={curTourney} isCurTourney={true} />
+        <TourneyCard tourney={curTourney} isCurTourney={true}/>
         {
           matches.length ?
             <MatchList matches={matches} tourneyRound={curTourney.roundNum}/>

@@ -13,7 +13,7 @@ export default function PrevTourneyScreen() {
     matches = matches.filter(m => m.tourneyId !== curTourney._id);
     // Extract an array of tourneys from the matches to map over
     tourneys = matches.reduce((acc, m) => acc.some(t => t.tourneyId === m.tourneyId) ?
-      acc : [...acc, {tourneyId: m.tourneyId, tourneyTitle: m.tourneyTitle}],
+      acc : [...acc, {_id: m.tourneyId, title: m.tourneyTitle}],
       []
     );
   }
@@ -22,10 +22,10 @@ export default function PrevTourneyScreen() {
     curTourney ?
       tourneys.length ?
         tourneys.map(tourney => 
-          <>
+          <React.Fragment key={tourney._id}>
             <TourneyCard tourney={tourney} isCurTourney={false} />
-            <MatchList matches={matches.filter(m => m.tourneyId === tourney.tourneyId)} />
-          </>
+            <MatchList matches={matches} />
+          </React.Fragment>
         )
         :
         <Typography variant='body2' style={{ marginTop: '2rem' }}>You Have No Previous Matches</Typography>
