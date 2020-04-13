@@ -6,8 +6,7 @@ const empty18Holes = new Array(18).fill(null).map(_ => <div></div>);
 const gridSpacer = new Array(10).fill(null).map((_, idx) => <div className='MatchGrid-spacer' key={idx}></div>);
 
 function getInitials(name) {
-  const lastInitial = name[name.lastIndexOf(' ') + 1];
-  return `${name[0]}${lastInitial}`.toUpperCase();
+  return name.split(' ').map(nm => nm[0].toUpperCase()).join('');
 }
 
 export default function MatchGrid({match}) {
