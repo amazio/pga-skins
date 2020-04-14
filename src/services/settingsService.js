@@ -3,6 +3,7 @@ import { actions } from '../reducers/store-reducer';
 export default {
   initialize,
   getSettings,
+  updateSettings,
   updateUsername
 };
 
@@ -14,6 +15,11 @@ const CARRY_SKINS_SUBKEY = 'carrySkins';
 
 function getSettings() {
   return JSON.parse(window.localStorage.getItem(SETTINGS_KEY));
+}
+
+function updateSettings(newSettings) {
+  let settings = JSON.parse(window.localStorage.getItem(SETTINGS_KEY));
+  window.localStorage.setItem(SETTINGS_KEY, JSON.stringify({...settings, ...newSettings}));
 }
 
 function updateUsername(username, dispatch) {

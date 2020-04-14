@@ -14,6 +14,8 @@ body {
   --light-grey: rgba(0, 0, 0, 0.54);
   --dark-red: rgba(141, 67, 67, .85);
   --green: rgba(62, 119, 76, .85);
+
+  --max-screen-width: 26rem;
 }
 
 #root {
@@ -39,6 +41,14 @@ a, a:active, a:visited {
   justify-content: space-between;
 }
 
+.flex-item-left {
+  align-self: flex-start;
+}
+
+.max-screen-width {
+  max-width: var(--max-screen-width);
+}
+
 .height-width-100 {
   height: 100%;
   width: 100%;
@@ -49,13 +59,22 @@ a, a:active, a:visited {
 }
 
 .margin-top-2rem {
-  margin-top: 2rem;
+  margin-top: 2rem !important;
 }
 
 .margin-left-auto {
   margin-left: auto !important;
 }
 
+.margin-left-right-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .PrivateRadioButtonIcon-layer-193 {
   color: #d5dcd6 !important;
+}
+
+#money-per-skin-input {
+  max-width: 6rem;
 }

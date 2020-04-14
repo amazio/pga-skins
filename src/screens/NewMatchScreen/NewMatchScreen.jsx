@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from 'react';
-import './NewMatchScreen.css';
 import StoreProvider from '../../contexts/StoreProvider';
 import { actions } from '../../reducers/store-reducer';
 import { CardHeader, CardContent, TextField, FormControlLabel, Switch } from '@material-ui/core';
@@ -15,17 +14,17 @@ function getDefaultRound(tourney) {
 
 export default function NewMatchScreen() {
   const { state, dispatch } = useContext(StoreProvider);
-  const { curTourney, settings, newMatchData: matchData } = state;
+  const { curTourney, settings, formData: matchData } = state;
 
   const matchDataInvalid = getMatchDataInvalid();
   
-  // Initialize newMatchData in store
+  // Initialize formData in store
   useEffect(function() {
     if (!curTourney) return;
     const {deviceId, username, carrySkins, moneyPerSkin} = settings;
     const {_id: tourneyId, title: tourneyTitle} = curTourney;
     dispatch({
-      type: actions.UPDATE_NEW_MATCH_DATA,
+      type: actions.UPDATE_FORM_DATA,
       payload: {
         deviceId, username, carrySkins, moneyPerSkin,
         tourneyId, tourneyTitle,
@@ -46,19 +45,19 @@ export default function NewMatchScreen() {
   }
 
   function handleChangeRound(e, roundNum) {
-    dispatch({type: actions.UPDATE_NEW_MATCH_DATA, payload: {roundNum}});
+    dispatch({type: actions.UPDATE_FORM_DATA, payload: {roundNum}});
   }
   
   function handleChangeMoney(e) {
-    dispatch({type: actions.UPDATE_NEW_MATCH_DATA, payload: {moneyPerSkin: e.target.value ? parseInt(e.target.value) : ''}});
+    dispatch({type: actions.UPDATE_FORM_DATA, payload: {moneyPerSkin: e.target.value ? parseInt(e.target.value) : ''}});
   }
   
   function handleChangeCarry(e) {
-    if (e.target) dispatch({type: actions.UPDATE_NEW_MATCH_DATA, payload: {carrySkins: e.target.checked}});
+    if (e.target) dispatch({type: actions.UPDATE_FORM_DATA, payload: {carrySkins: e.target.checked}});
   }
   
   function handleChangePlayers(e, selectedPlayers) {
-    dispatch({type: actions.UPDATE_NEW_MATCH_DATA, payload: {selectedPlayerIds: selectedPlayers.map(p => p.playerId)}});
+    dispatch({type: actions.UPDATE_FORM_DATA, payload: {selectedPlayerIds: selectedPlayers.map(p => p.playerId)}});
   }
 
   return (
@@ -69,7 +68,7 @@ export default function NewMatchScreen() {
           <RoundPicker round={matchData.roundNum} onChange={handleChangeRound} color='primary' />
           <TextField label='Money Per Skin' type='number' variant='outlined' min='1' step='1' margin='normal'
             value={matchData.moneyPerSkin} onChange={handleChangeMoney} color='primary'
-            id='NewMatchScreen_money_input'
+            id='money-per-skin-input'
           />
           <FormControlLabel margin='normal' label='Carry Over Skins?' className='MuiFormLabel-root'
             control={<Switch value='carrySkins' checked={matchData.carrySkins} onChange={handleChangeCarry} color='primary' />}

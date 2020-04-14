@@ -13,8 +13,8 @@ import realtimeService from '../../services/realtimeService';
 import settingsService from '../../services/settingsService';
 
 export default function TopBarControls() {
-  const [ showCopyMsg, setShowCopyMsg ] = useState(false);
-  const [ isConfirmDeleteOpen, setIsConfirmDeleteOpen ] = useState(false);
+  const [showCopyMsg, setShowCopyMsg] = useState(false);
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
   const { state, dispatch } = useContext(StoreProvider);
   const { ui } = state;
   const { pathname } = useLocation();
@@ -22,28 +22,34 @@ export default function TopBarControls() {
   const inputEl = useRef(null);
 
   function handleCreateMatch() {
-    realtimeService.createMatch(state.newMatchData, function (err, match) {
+    realtimeService.createMatch(state.formData, function (err, match) {
       dispatch({ type: actions.CREATE_MATCH, payload: match });
       history.push(`/matches/${match._id}`);
     });
   }
 
-  function handleCancelNewMatch() {
+  function handleCancel() {
+    dispatch({type: actions.UPDATE_FORM_DATA, payload: {}});
     history.goBack();
   }
-
+  
   function handleShare(e) {
     inputEl.current.select();
     document.execCommand('copy');
     setShowCopyMsg(true);
   }
-
+  
   function handleDelete(confirmed, matchId, isMatchOwner) {
     setIsConfirmDeleteOpen(false);
     if (confirmed) {
       realtimeService.deleteMatch(matchId, isMatchOwner);
       history.replace('/');
     }
+  }
+  
+  function handleUpdateSettings() {
+    dispatch({type: actions.UPDATE_SETTINGS, payload: state.formData});
+    // Decided not to route anywhere after clicking Save btn
   }
 
   if (pathname === '/') {
@@ -54,7 +60,7 @@ export default function TopBarControls() {
       ;
   } else if (pathname === '/matches/new') {
     return <span>
-      <ButtonCancel handleCancel={handleCancelNewMatch} />&nbsp;
+      <ButtonCancel handleCancel={handleCancel} />&nbsp;
       <ButtonSave handleClick={handleCreateMatch} disabled={ui.saveBtnDisabled} />
     </span>;
   } else if (pathname.startsWith('/matches/')) {
@@ -64,7 +70,7 @@ export default function TopBarControls() {
     return <span>
       <ButtonDelete handleDelete={() => setIsConfirmDeleteOpen(true)} />
       &nbsp;<ButtonShare handleShare={handleShare} />
-      <input ref={inputEl} onFocus={(e) => e.target.blur()} defaultValue={window.location.href} style={{position: 'absolute', marginTop: -999}} />
+      <input ref={inputEl} onFocus={(e) => e.target.blur()} defaultValue={window.location.href} style={{ position: 'absolute', marginTop: -999 }} />
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
@@ -88,7 +94,10 @@ export default function TopBarControls() {
       />
     </span>;
   } else if (pathname === '/settings') {
-    return null;
+    return <span>
+      <ButtonCancel handleCancel={handleCancel} />&nbsp;
+      <ButtonSave handleClick={handleUpdateSettings} disabled={ui.saveBtnDisabled} />
+    </span>;
   } else {
     return null;
   }

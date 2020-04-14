@@ -1,5 +1,5 @@
 #match-card {
-  max-width: 26rem;
+  max-width: var(--max-screen-width);
   margin: auto;
 }
 

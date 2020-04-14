@@ -13,7 +13,7 @@ export const initialState = {
   },
   curTourney: null,
   savedMatches,
-  newMatchData: {},
+  formData: {},
   viewingMatch: null,
   ui: {
     matchesTab: 'current',
@@ -25,7 +25,7 @@ export const actions = {
   UPDATE_SETTINGS: 'UPDATE_SETTINGS',
   UPDATE_USERNAME: 'UPDATE_USERNAME',
   UPDATE_CUR_TOURNEY: 'UPDATE_CUR_TOURNEY',
-  UPDATE_NEW_MATCH_DATA: 'UPDATE_NEW_MATCH_DATA',
+  UPDATE_FORM_DATA: 'UPDATE_FORM_DATA',
   UPDATE_VIEWING_MATCH: 'UPDATE_VIEWING_MATCH',
   CREATE_MATCH: 'CREATE_MATCH',
   DELETE_MATCH: 'DELETE_MATCH',
@@ -38,13 +38,14 @@ export const actions = {
 function storeReducer(state, action) {
   switch(action.type) {
     case actions.UPDATE_SETTINGS:
+      settingsService.updateSettings(action.payload);
       return {...state, settings: {...state.settings, ...action.payload}};
     case actions.UPDATE_USERNAME:
       return {...state, settings: {...state.settings, username: action.payload}};
     case actions.UPDATE_CUR_TOURNEY:
       return {...state, curTourney: action.payload};
-    case actions.UPDATE_NEW_MATCH_DATA:
-      return {...state, newMatchData: {...state.newMatchData, ...action.payload}};
+    case actions.UPDATE_FORM_DATA:
+      return {...state, formData: {...state.formData, ...action.payload}};
     case actions.UPDATE_VIEWING_MATCH:
       matchService.updateSavedMatch(action.payload);
       return {...state, viewingMatch: action.payload};
@@ -56,7 +57,7 @@ function storeReducer(state, action) {
     case actions.CREATE_MATCH:
       matchService.saveNewMatch(action.payload);
       const savedMatches = matchService.getSavedMatches();
-      return {...state, viewingMatch: action.payload, savedMatches, newMatchData: {}};
+      return {...state, viewingMatch: action.payload, savedMatches, formData: {}};
     case actions.DELETE_MATCH:
       const updatedSavedMatches = matchService.deleteMatch(action.payload);
       return {...state, savedMatches: updatedSavedMatches, viewingMatch: null};
