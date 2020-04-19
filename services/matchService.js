@@ -11,6 +11,7 @@ module.exports = {
   getMatchViewing,
   removeMatchFromViewing,
   deleteMatch,
+  deleteMatches,
   cleanupAndGetAllMatchesBeingViewed,
   notifyClientsOfUpdatedMatch,
   getAllMatchesForIds
@@ -41,6 +42,11 @@ function removeMatchFromViewing(matchId) {
 function deleteMatch(matchId) {
   removeMatchFromViewing(matchId);
   Match.findByIdAndDelete(matchId).then(() => {});
+}
+
+async function deleteMatches(matches, deviceId) {
+  matches.forEach(m => removeMatchFromViewing(m._id));
+  await Match.deleteMany({_id: matches, deviceId});
 }
 
 async function getMatchViewing(matchId, curTourneyId) {

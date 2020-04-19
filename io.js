@@ -55,6 +55,10 @@ io.on('connection', function(socket) {
     realtimeService.deleteMatch(matchId);
   });
 
+  socket.on(messages.DELETE_MATCHES, function(matches, deviceId) {
+    realtimeService.deleteMatches(matches, deviceId);
+  });
+
   socket.on('disconnect', function() {
     const matchId = socket.viewingMatchId;
     // Leave room if viewing match

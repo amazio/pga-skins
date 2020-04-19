@@ -13,13 +13,18 @@ export default {
   createMatch,
   viewMatch,
   stopViewingMatch,
-  deleteMatch
+  deleteMatch,
+  deleteMatches
 };
 
 /*--- Emitters ---*/
 function deleteMatch(matchId, isMatchOwner) {
   savedDispatch({type: actions.DELETE_MATCH, payload: matchId});
   if (isMatchOwner) socket.emit(messages.DELETE_MATCH, matchId);
+}
+
+function deleteMatches(matches, deviceId) {
+  socket.emit(messages.DELETE_MATCHES, matches, deviceId);
 }
 
 function setDispatch(dispatch) {

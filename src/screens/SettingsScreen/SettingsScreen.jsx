@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
 import StoreProvider from '../../contexts/StoreProvider';
 import { actions } from '../../reducers/store-reducer';
+import realtimeService from '../../services/realtimeService';
 import { Button, Typography, CardHeader, CardContent, TextField, FormControlLabel, Switch } from '@material-ui/core';
 import { DeleteOutlined } from '@material-ui/icons';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
 
 export default function SettingsScreen() {
   const { state, dispatch } = useContext(StoreProvider);
-  const { settings: { username, moneyPerSkin, carrySkins }, savedMatches, curTourney } = state;
+  const { settings: { username, moneyPerSkin, carrySkins, deviceId }, savedMatches, curTourney } = state;
   const [formData, setFormData] = useState({ username, moneyPerSkin, carrySkins });
   const [isConfirmDeleteMatchesOpen, setIsConfirmDeleteMatchesOpen] = useState(false);
 
   const disableSaveBtn = formInvalid();
   const previousMatches = curTourney ?
     savedMatches.filter(m => m.tourneyId !== curTourney._id) : [];
+  const curMatches = savedMatches.filter(m => !previousMatches.includes(m));
   const prevCount = previousMatches.length;
 
   function formInvalid() {
@@ -42,8 +44,14 @@ export default function SettingsScreen() {
     setFormData({ ...formData, username: e.target.value });
   }
 
-  function handleDelete(confirmed) {
-    alert(confirmed);
+  async function handleDelete(confirmed) {
+    if (confirmed) {
+      const matches = previousMatches.filter(m => m.deviceId === deviceId);
+      // Will verify on the server that matches were created by this device
+      if (matches.length) realtimeService.deleteMatches(matches, deviceId);
+      // Update settings to contain only matches for cur tourney
+      dispatch({ type: actions.SET_ALL_MATCHES, payload: curMatches });
+    }
     setIsConfirmDeleteMatchesOpen(false);
   }
 
