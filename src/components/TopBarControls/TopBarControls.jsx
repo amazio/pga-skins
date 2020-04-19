@@ -56,7 +56,8 @@ export default function TopBarControls() {
     return ui.matchesTab === 'current' ?
       <Button onClick={() => history.push('/matches/new')} startIcon={<Add />} variant='outlined' size='small'>MATCH</Button>
       :
-      <Button onClick={() => window.localStorage.clear()} variant='outlined' size='small'>TEMP CLEAR LOCALSTORAGE</Button>
+      null
+      {/* <Button onClick={() => window.localStorage.clear()} variant='outlined' size='small'>TEMP CLEAR LOCALSTORAGE</Button>*/}
       ;
   } else if (pathname === '/matches/new') {
     return <span>
