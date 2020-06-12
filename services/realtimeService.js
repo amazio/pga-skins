@@ -26,10 +26,11 @@ function updateAllMatchesBeingViewed() {
   let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney._id);
   for (let match of matches) {
     matchService.computeSkins(match, tourney.leaderboard);
-    match.save().then(err => {
-      if (err) return console.log('Error saving match in updateAllMatchesBeingViewed()', err);
-      matchService.addMatchToViewing(match);
-      matchService.notifyClientsOfUpdatedMatch(match);
+    match.save().then(doc => {
+      matchService.addMatchToViewing(doc);
+      matchService.notifyClientsOfUpdatedMatch(doc);
+    }).catch(err => {
+      return console.log('Error saving match in updateAllMatchesBeingViewed()', err);
     });
   }
 }
@@ -56,10 +57,12 @@ function deleteMatches(matches, deviceId) {
 }
 
 function createMatch(matchData) {
+  const players = getCurrentTourney().leaderboard;
   // matchData will have selectedPlayerIds so need to transform
   // this into players with name and playerId before creating
-  const players = getCurrentTourney().leaderboard;
-  matchService.computeSkins(matchData, players)
+  matchData.players = matchData.selectedPlayerIds.map(pId => ({...players.find(p => p.playerId === pId)}));
+  delete matchData.selectedPlayerIds;
+  matchService.computeSkins(matchData, players);
   return matchService.create(matchData);
 }
 

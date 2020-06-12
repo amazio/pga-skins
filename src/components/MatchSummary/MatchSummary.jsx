@@ -1,11 +1,7 @@
 import React from 'react';
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
 import './MatchSummary.css';
-
-function getInitials(name) {
-  const lastInitial = name[name.lastIndexOf(' ') + 1];
-  return `${name[0]}${lastInitial}`.toUpperCase();
-}
+import { getInitials } from '../../services/utilities';
 
 const up = '▲';
 const down = '▼';

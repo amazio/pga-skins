@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const holeSchema = new Schema({
-  strokes: {type: Number, default: null},
+  strokes: {type: Number, default: 0},
   par: {type: Number, default: null},
   skin: {type: Boolean, default: false},
   carry: {type: Boolean, default: false}

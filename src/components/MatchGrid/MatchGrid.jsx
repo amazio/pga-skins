@@ -1,13 +1,10 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import { getInitials } from '../../services/utilities';
 import './MatchGrid.css';
 
 const empty18Holes = new Array(18).fill(null).map(_ => <div></div>);
 const gridSpacer = new Array(10).fill(null).map((_, idx) => <div className='MatchGrid-spacer' key={idx}></div>);
-
-function getInitials(name) {
-  return name.split(' ').map(nm => nm[0].toUpperCase()).join('');
-}
 
 export default function MatchGrid({match}) {
   const playerWithHoles = match.players.find(p => p.round && p.round.holes && p.round.holes.length);
@@ -27,7 +24,7 @@ export default function MatchGrid({match}) {
           borderColor: (h.skin || h.carry) &&  'var(--light-green)',
           backgroundColor: h.skin && 'var(--pale-green-bg)'
         }}>
-          {h.strokes}
+          {h.strokes || ''}
         </span>
       </div>
       )
