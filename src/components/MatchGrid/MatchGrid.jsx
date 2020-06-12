@@ -24,7 +24,7 @@ export default function MatchGrid({match}) {
           borderColor: (h.skin || h.carry) &&  'var(--light-green)',
           backgroundColor: h.skin && 'var(--pale-green-bg)'
         }}>
-          {h.strokes || ''}
+          {h.strokes || '·'}
         </span>
       </div>
       )
