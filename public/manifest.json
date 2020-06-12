@@ -21,5 +21,8 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#F1F0EE",
-  "background_color": "#F1F0EE"
+  "background_color": "#F1F0EE",
+  "permissions": [
+    "clipboardWrite"
+  ]
 }

@@ -14,12 +14,12 @@ import settingsService from '../../services/settingsService';
 
 export default function TopBarControls() {
   const [showCopyMsg, setShowCopyMsg] = useState(false);
+  const [showCopyFailMsg, setShowCopyFailMsg] = useState(false);
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
   const { state, dispatch } = useContext(StoreProvider);
   const { ui } = state;
   const { pathname } = useLocation();
   const history = useHistory();
-  const inputEl = useRef(null);
 
   function handleCreateMatch() {
     realtimeService.createMatch(state.formData, function (err, match) {
@@ -34,9 +34,11 @@ export default function TopBarControls() {
   }
   
   function handleShare(e) {
-    inputEl.current.select();
-    document.execCommand('copy');
-    setShowCopyMsg(true);
+    navigator.clipboard.writeText(window.location.href).then(function() {
+      setShowCopyMsg(true);
+    }, function() {
+      setShowCopyFailMsg(true);
+    });
   }
   
   function handleDelete(confirmed, matchId, isMatchOwner) {
@@ -71,7 +73,6 @@ export default function TopBarControls() {
     return <span>
       <ButtonDelete handleDelete={() => setIsConfirmDeleteOpen(true)} />
       &nbsp;<ButtonShare handleShare={handleShare} />
-      <input ref={inputEl} onFocus={(e) => e.target.blur()} defaultValue={window.location.href} style={{ position: 'absolute', marginTop: -999 }} />
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
@@ -81,6 +82,16 @@ export default function TopBarControls() {
         onClose={() => setShowCopyMsg(false)}
         autoHideDuration={3000}
         message='Copied Match Link to the Clipboard'
+      />
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={showCopyFailMsg}
+        onClose={() => setShowCopyFailMsg(false)}
+        autoHideDuration={5000}
+        message="Please Manually Copy Your Browser's Address Bar Contents"
       />
       <ConfirmDialog
         isConfirmOpen={isConfirmDeleteOpen}
