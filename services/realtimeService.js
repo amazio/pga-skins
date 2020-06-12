@@ -26,9 +26,11 @@ function updateAllMatchesBeingViewed() {
   let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney._id);
   for (let match of matches) {
     matchService.computeSkins(match, tourney.leaderboard);
-    match.save();
-    matchService.addMatchToViewing(match);
-    matchService.notifyClientsOfUpdatedMatch(match);
+    match.save().then(err => {
+      if (err) return console.log('Error saving match in updateAllMatchesBeingViewed()', err);
+      matchService.addMatchToViewing(match);
+      matchService.notifyClientsOfUpdatedMatch(match);
+    });
   }
 }
 
