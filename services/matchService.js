@@ -75,10 +75,10 @@ function computeSkins(matchData, leaderboard) {
     }
   });
   if (matchData.players.some(p => !p.round)) return;
-  if (matchData.carrySkins) updateMatchForCarrys(matchData.players);
   for (let holeIdx = 0; holeIdx < 18; holeIdx++) {
     updateHoleForSkins(matchData.players, holeIdx);
   }
+  if (matchData.carrySkins) updateMatchForCarrys(matchData.players);
   // computeMoney returns the whether or not the match is complete
   matchData.completed = computeMoney(matchData.players, matchData.moneyPerSkin);
 }
