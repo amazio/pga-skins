@@ -30,7 +30,7 @@ function cleanupAndGetAllMatchesBeingViewed(tourneyId) {
   // updated tourney, remove any stragler matches not for cur tourney
   const matches = Object.values(viewingMatchesForCurTourney);
   for (let match of matches) {
-    if (match.tourneyId !== tourneyId) delete viewingMatchesForCurTourney[match.id];
+    if ( !tourneyId.equals(match.tourneyId) ) delete viewingMatchesForCurTourney[match._id.toString()];
   }
   return matches;
 }
@@ -53,7 +53,7 @@ async function getMatchViewing(matchId, curTourneyId) {
   if (viewingMatchesForCurTourney[matchId]) return Promise.resolve(viewingMatchesForCurTourney[matchId]);
   const matchDoc = await Match.findById(matchId);
   // Only add if match requested is for cur tourney (going to be updated)
-  if (matchDoc.tourneyId.equals(curTourneyId)) addMatchToViewing(matchDoc);
+  if (matchDoc && matchDoc.tourneyId.equals(curTourneyId)) addMatchToViewing(matchDoc);
   return Promise.resolve(matchDoc);
 }
 
@@ -110,7 +110,7 @@ function updateMatchForCarrys(players) {
 
 function updateHoleForSkins(players, holeIdx) {
   const holes = players.map(p => p.round.holes[holeIdx]);
-  holes.strokes = parseInt(holes.strokes) || 0;
+  holes.forEach(h => h.strokes = parseInt(h.strokes) || 0);
   if (holes.some(h => !h.strokes)) return;
   const lowScore = Math.min(...holes.map(h => h.strokes));
   const countOfLow = holes.reduce((count, h) => h.strokes === lowScore ? count + 1 : count, 0);
