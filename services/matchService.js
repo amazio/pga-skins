@@ -1,6 +1,7 @@
 // const io = require('../io');
 const messages = require('./socketMessages');
 const Match = require('../models/match');
+const match = require('../models/match');
 
 const viewingMatchesForCurTourney = {};
 
@@ -78,7 +79,14 @@ function computeSkins(matchData, leaderboard) {
   for (let holeIdx = 0; holeIdx < 18; holeIdx++) {
     updateHoleForSkins(matchData.players, holeIdx);
   }
-  if (matchData.carrySkins) updateMatchForCarrys(matchData.players);
+  if (matchData.carrySkins) {
+    updateMatchForCarrys(matchData.players);
+  } else {
+    // clear all carries
+    matchData.players.forEach(p => {
+      p.round.holes.forEach(h => h.carry = false);
+    });
+  }
   // computeMoney returns the whether or not the match is complete
   matchData.completed = computeMoney(matchData.players, matchData.moneyPerSkin);
 }
