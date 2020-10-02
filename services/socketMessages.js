@@ -6,4 +6,7 @@ module.exports = {
   DELETE_MATCH: 'DELETE_MATCH',
   DELETE_MATCHES: 'DELETE_MATCHES',
   SYNC_MATCHES: 'SYNC_MATCHES',
+
+  // Messages between this server and the polling server
+  LB_UPDATED: 'LB_UPDATED',
 };
