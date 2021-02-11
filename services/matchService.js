@@ -37,6 +37,7 @@ function cleanupAndGetAllMatchesBeingViewed(tourneyId) {
 }
 
 function removeMatchFromViewing(matchId) {
+  console.log(`Removing match ${matchId} from viewing`);
   delete viewingMatchesForCurTourney[matchId];
 }
 

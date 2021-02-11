@@ -7,7 +7,7 @@ socket.on('connect', function() {
 });
 
 socket.on(messages.LB_UPDATED, function(tourney) {
-  console.log('Received updated tourney', tourney);
+  console.log('Received updated tourney', tourney._id);
   realtimeService.updateCurrentTourney(tourney);
 });
 

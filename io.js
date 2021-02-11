@@ -47,17 +47,10 @@ io.on('connection', function(socket) {
   socket.on(messages.STOP_VIEWING_MATCH, function(matchId) {
     delete socket.viewingMatchId;
     // Remove this socket from room for the viewed match
-    socket.leave(matchId, function() {
-      // If room has no more sockets, remove from tracking so that no
-      // further updates will be calculated and emitted for this match
-      const nsp = io.nsps[`/${matchId}`];
-      if (!nsp) {
-        realtimeService.removeMatchFromViewing(matchId);
-      } else {
-        const numClients = Object.keys(nsp.sockets).length;
-        if (!numClients) realtimeService.removeMatchFromViewing(matchId);
-      }
-    });
+    socket.leave(matchId);
+    // If room has no more sockets, remove doc from tracking so that no
+    // further updates will be calculated and emitted for this match
+    if (!io.of('/').adapter.rooms.has(matchId)) realtimeService.removeMatchFromViewing(matchId);
   });
   
   socket.on(messages.DELETE_MATCH, function(matchId) {
@@ -69,21 +62,11 @@ io.on('connection', function(socket) {
   });
 
   socket.on('disconnect', function() {
+    // If viewing a match, get its id
     const matchId = socket.viewingMatchId;
-    // Leave room if viewing match
-    if (matchId) {
-      socket.leave(matchId, function() {
-        // If room has no more sockets, remove from tracking so that no
-        // further updates will be calculated and emitted for this match
-        const nsp = io.nsps[`/${matchId}`];
-        if (!nsp) {
-          realtimeService.removeMatchFromViewing(matchId);
-        } else {
-          const numClients = Object.keys(nsp.sockets).length;
-          if (!numClients) realtimeService.removeMatchFromViewing(matchId);
-        }
-      });
-    }
+    // If room has no more sockets, remove doc from tracking so that no
+    // further updates will be calculated and emitted for this match
+    if (matchId && !io.of('/').adapter.rooms.has(matchId)) realtimeService.removeMatchFromViewing(matchId);
   });
   
 });
