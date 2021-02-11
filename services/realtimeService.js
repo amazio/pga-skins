@@ -72,4 +72,5 @@ function getCurrentTourney() {
 
 function updateCurrentTourney(tourney) {
   tourneyService.update(tourney);
+  updateAllMatchesBeingViewed();
 }
