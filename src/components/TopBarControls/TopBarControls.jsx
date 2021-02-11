@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Snackbar } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
