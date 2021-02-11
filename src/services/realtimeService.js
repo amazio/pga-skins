@@ -44,7 +44,7 @@ async function syncMatchesWithServer() {
 function viewMatch(matchId, dispatch) {
   savedDispatch = dispatch;
   socket.emit(messages.START_VIEWING_MATCH, matchId, function(matchExists) {
-    if (!matchExists) savedDispatch({type: actions.STOP_VIEWING_MATCH});
+    if (!matchExists) savedDispatch({type: actions.DELETE_MATCH, payload: matchId});
   });
 }
 

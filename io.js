@@ -25,13 +25,22 @@ io.on('connection', function(socket) {
     }
   });
 
-  socket.on(messages.START_VIEWING_MATCH, async function(matchId) {
+  socket.on(messages.START_VIEWING_MATCH, async function(matchId, cb) {
     // Will get matchDoc from tracking if exists, otherwise will query for it
     let matchDoc = await realtimeService.getMatchViewing(matchId);
-    // Add this socket to room for the viewed match
-    socket.join(matchId);
-    // Put viewing match's id on socket object for cleanup
-    socket.viewingMatchId = matchId;
+    if (!matchDoc) {
+      // Match no longer exists, let client know via cb and exit
+      return cb(false);
+    } else {
+      cb(true);
+    } 
+    // Add this socket to room for the viewed match if for current tourney
+    const currentTourneyId = realtimeService.getCurrentTourney()._id;
+    if (matchDoc.tourneyId.equals(currentTourneyId)) {
+      socket.join(matchId);
+      // Put viewing match's id on socket object for cleanup
+      socket.viewingMatchId = matchId;
+    }
     socket.emit(messages.UPDATE_VIEWING_MATCH, matchDoc);
   });
 
@@ -78,5 +87,6 @@ io.on('connection', function(socket) {
   });
   
 });
+
 
 module.exports = io;

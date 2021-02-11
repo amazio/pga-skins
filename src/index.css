@@ -1,8 +1,7 @@
-
-
-body {
+body, html {
   height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
+  /* Commented out to see if phones have fixed issue */
+  /* height: calc(var(--vh, 1vh) * 100); */
   margin: 0;
 }
 
