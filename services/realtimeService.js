@@ -40,8 +40,8 @@ function removeMatchFromViewing(matchId) {
 }
 
 function getMatchViewing(matchId) {
-  const curTourneyId = tourneyService.getCurrent()._id;
-  return matchService.getMatchViewing(matchId, curTourneyId);
+  const curTourney = tourneyService.getCurrent();
+  return matchService.getMatchViewing(matchId, curTourney);
 }
 
 function addMatchToViewing(matchDoc) {

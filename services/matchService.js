@@ -1,7 +1,6 @@
 // const io = require('../io');
 const messages = require('./socketMessages');
 const Match = require('../models/match');
-const match = require('../models/match');
 
 const viewingMatchesForCurTourney = {};
 
@@ -51,11 +50,14 @@ async function deleteMatches(matches, deviceId) {
   await Match.deleteMany({_id: matches, deviceId});
 }
 
-async function getMatchViewing(matchId, curTourneyId) {
+async function getMatchViewing(matchId, curTourney) {
   if (viewingMatchesForCurTourney[matchId]) return Promise.resolve(viewingMatchesForCurTourney[matchId]);
   const matchDoc = await Match.findById(matchId);
   // Only add if match requested is for cur tourney (going to be updated)
-  if (matchDoc && matchDoc.tourneyId.equals(curTourneyId)) addMatchToViewing(matchDoc);
+  if (matchDoc && matchDoc.tourneyId.equals(curTourney._id)) {
+    computeSkins(matchDoc, curTourney);
+    addMatchToViewing(matchDoc);
+  }
   return Promise.resolve(matchDoc);
 }
 
