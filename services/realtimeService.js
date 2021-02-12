@@ -20,10 +20,10 @@ function getAllMatchesThatExistOnClient(matchIds) {
   return matchService.getAllMatchesForIds(matchIds);
 }
 
-function updateAllMatchesBeingViewed() {
+function updateAllMatchesBeingViewed(updatedPlayerIds) {
   const tourney = getCurrentTourney();
-  // matches will be an array
-  let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney._id);
+  let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney._id)
+    .filter(m => m.players.some(p => updatedPlayerIds.includes(p.playerId)));
   for (let match of matches) {
     matchService.computeSkins(match, tourney.leaderboard);
     match.save().then(doc => {
@@ -70,7 +70,7 @@ function getCurrentTourney() {
   return tourneyService.getCurrent();
 }
 
-function updateCurrentTourney(tourney) {
+function updateCurrentTourney(tourney, updatedPlayerIds) {
   tourneyService.update(tourney);
-  updateAllMatchesBeingViewed();
+  updateAllMatchesBeingViewed(updatedPlayerIds);
 }

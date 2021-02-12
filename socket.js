@@ -6,9 +6,10 @@ socket.on('connect', function() {
   console.log('Connected to socket.io server');
 });
 
-socket.on(messages.LB_UPDATED, function(tourney) {
+socket.on(messages.LB_UPDATED, function({tourney, updatedPlayerIds}) {
   console.log('Received updated tourney', tourney._id);
-  realtimeService.updateCurrentTourney(tourney);
+  console.log('Updated player Ids: ', updatedPlayerIds);
+  realtimeService.updateCurrentTourney(tourney, updatedPlayerIds);
 });
 
 module.exports = socket;
