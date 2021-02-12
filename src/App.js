@@ -20,8 +20,6 @@ export default function App() {
     realtimeService.syncMatchesWithServer();
     // init will return true if this is the first visit for the device
     if (settingsService.initialize(dispatch)) history.replace('/welcome');
-    // Cleanup function
-    return () => { clearInterval(timerId); };
   }, []);
 
   return (
