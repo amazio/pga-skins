@@ -121,7 +121,14 @@ function updateMatchForCarrys(players) {
 
 function updateHoleForSkins(players, holeIdx) {
   const holes = players.map(p => p.round.holes[holeIdx]);
-  holes.forEach(h => h.strokes = parseInt(h.strokes) || 0);
+  holes.forEach(function(h, idx) {
+    // Sometimes h will be undefined due to data source
+    if (h) {
+      h.strokes = parseInt(h.strokes) || 0
+    } else {
+      holes[idx] = {strokes: 0};
+    }
+  });
   if (holes.some(h => !h.strokes)) return;
   const lowScore = Math.min(...holes.map(h => h.strokes));
   const countOfLow = holes.reduce((count, h) => h.strokes === lowScore ? count + 1 : count, 0);
