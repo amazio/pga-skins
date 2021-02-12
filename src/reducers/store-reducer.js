@@ -48,7 +48,8 @@ function storeReducer(state, action) {
       return {...state, formData: {...state.formData, ...action.payload}};
     case actions.UPDATE_VIEWING_MATCH:
       matchService.updateSavedMatch(action.payload);
-      return {...state, viewingMatch: action.payload};
+      const savedMatches = matchService.getSavedMatches();
+      return {...state, viewingMatch: action.payload, savedMatches: savedMatches};
     case actions.SET_ALL_MATCHES:
       matchService.setSavedMatches(action.payload);
       return {...state, savedMatches: action.payload};
