@@ -14,7 +14,7 @@ export default function App() {
   
   useEffect(function () {
     // Fetch the current tourney from the server every hour
-    const timerId = tourneyService.setCurTourney(dispatch,  1000 * 60 * 60);
+    tourneyService.setCurTourney(dispatch);
     // Enable realtimeService to call dispatch
     realtimeService.setDispatch(dispatch);
     realtimeService.syncMatchesWithServer();
