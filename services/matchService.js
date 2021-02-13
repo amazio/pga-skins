@@ -55,8 +55,14 @@ async function getMatchViewing(matchId, curTourney) {
   const matchDoc = await Match.findById(matchId);
   // Only add if match requested is for cur tourney (going to be updated)
   if (matchDoc && matchDoc.tourneyId.equals(curTourney._id)) {
-    computeSkins(matchDoc, curTourney.leaderboard);
-    addMatchToViewing(matchDoc);
+    // Will throw error if round hasn't started
+    try {
+      computeSkins(matchDoc, curTourney.leaderboard);
+    } catch {
+      // Nothing to do here
+    } finally {
+      addMatchToViewing(matchDoc);
+    }
   }
   return Promise.resolve(matchDoc);
 }
