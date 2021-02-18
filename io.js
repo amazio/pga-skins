@@ -50,7 +50,9 @@ io.on('connection', function(socket) {
     socket.leave(matchId);
     // If room has no more sockets, remove doc from tracking so that no
     // further updates will be calculated and emitted for this match
-    if (!io.of('/').adapter.rooms.has(matchId)) realtimeService.removeMatchFromViewing(matchId);
+    // Update below
+    // Keep updating for mobile browsers
+    // if (!io.of('/').adapter.rooms.has(matchId)) realtimeService.removeMatchFromViewing(matchId);
   });
   
   socket.on(messages.DELETE_MATCH, function(matchId) {
