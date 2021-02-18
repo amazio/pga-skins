@@ -53,7 +53,7 @@ function storeReducer(state, action) {
     case actions.UPDATE_VIEWING_MATCH:
       matchService.updateSavedMatch(action.payload);
       const matches = matchService.getSavedMatches();
-      return { ...state, viewingMatch: action.payload, savedMatches: matches };
+      return { ...state, viewingMatch: action.payload, savedMatches: matches, ui: { ...state.ui, rerenderCount: state.ui.rerenderCount + 1 } };
     case actions.SET_ALL_MATCHES:
       matchService.setSavedMatches(action.payload);
       return { ...state, savedMatches: action.payload };
@@ -72,7 +72,7 @@ function storeReducer(state, action) {
       return { ...state, ui: { ...state.ui, saveBtnDisabled: action.payload } };
     case actions.RECONNECT:
       if (state.viewingMatch) realtimeService.viewMatch(state.viewingMatch._id, null);
-      return state;
+      return { ...state, ui: { ...state.ui, rerenderCount: state.ui.rerenderCount + 1 } };
     case actions.RERENDER:
       return { ...state, ui: { ...state.ui, rerenderCount: state.ui.rerenderCount + 1 } };
     default:

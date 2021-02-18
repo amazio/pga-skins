@@ -65,7 +65,7 @@ io.on('connection', function(socket) {
   
   socket.on('disconnect', function() {
     // If viewing a match, get its id
-    const matchId = socket.viewingMatchId;
+    // const matchId = socket.viewingMatchId;
     // If room has no more sockets, remove doc from tracking so that no
     // further updates will be calculated and emitted for this match
     // Keep updating for mobile browsers
