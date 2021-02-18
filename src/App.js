@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import StoreProvider from './contexts/StoreProvider';
-import storeReducer, { initialState } from './reducers/store-reducer';
+import storeReducer, { initialState, actions } from './reducers/store-reducer';
 import realtimeService from './services/realtimeService';
 import tourneyService from './services/tourneyService';
 import settingsService from './services/settingsService';
@@ -14,7 +14,7 @@ export default function App() {
 
   function renewViewMatch() {
     if (document.visibilityState === 'visible' && state.viewingMatch) {
-      realtimeService.viewMatch(state.viewMatch._id, dispatch);
+      dispatch({action: actions.RERENDER});
     }
   }
 
