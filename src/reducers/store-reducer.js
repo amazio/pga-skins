@@ -1,5 +1,6 @@
 import settingsService from '../services/settingsService';
 import matchService from '../services/matchService';
+import realtimeService from '../services/realtimeService';
 
 const settings = settingsService.getSettings();
 const savedMatches = matchService.getSavedMatches();
@@ -32,7 +33,8 @@ export const actions = {
   SET_ALL_MATCHES: 'SET_ALL_MATCHES',
   STOP_VIEWING_MATCH: 'STOP_VIEWING_MATCH',
   UPDATE_UI_MATCHES_TAB: 'UPDATE_UI_MATCHES_TAB',
-  UPDATE_UI_SAVE_BTN: 'UPDATE_UI_SAVE_BTN'
+  UPDATE_UI_SAVE_BTN: 'UPDATE_UI_SAVE_BTN',
+  RECONNECT: 'RECONNECT'
 };
 
 function storeReducer(state, action) {
@@ -66,6 +68,9 @@ function storeReducer(state, action) {
       return {...state, ui: {...state.ui, matchesTab: action.payload}};
     case actions.UPDATE_UI_SAVE_BTN:
       return {...state, ui: {...state.ui, saveBtnDisabled: action.payload}};
+    case actions.RECONNECT:
+      if (state.viewingMatch) realtimeService.viewMatch(state.viewingMatch._id, null);
+      return state;
     default:
       console.log('Received unknow action.type', action.type);
       return state;

@@ -42,7 +42,7 @@ async function syncMatchesWithServer() {
 }
 
 function viewMatch(matchId, dispatch) {
-  savedDispatch = dispatch;
+  if (dispatch) savedDispatch = dispatch;
   socket.emit(messages.START_VIEWING_MATCH, matchId, function(matchExists) {
     if (!matchExists) savedDispatch({type: actions.DELETE_MATCH, payload: matchId});
   });
@@ -60,4 +60,8 @@ function createMatch(matchData, cb) {
 /*--- Listeners ---*/
 socket.on(messages.UPDATE_VIEWING_MATCH, function(match) {
   if (match) savedDispatch({type: actions.UPDATE_VIEWING_MATCH, payload: match});
+});
+
+socket.on('reconnect', function renewViewMatch() {
+  savedDispatch({type: actions.RECONNECT});
 });
