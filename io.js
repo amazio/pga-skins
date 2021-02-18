@@ -58,17 +58,18 @@ io.on('connection', function(socket) {
   socket.on(messages.DELETE_MATCH, function(matchId) {
     realtimeService.deleteMatch(matchId);
   });
-
+  
   socket.on(messages.DELETE_MATCHES, function(matches, deviceId) {
     realtimeService.deleteMatches(matches, deviceId);
   });
-
+  
   socket.on('disconnect', function() {
     // If viewing a match, get its id
     const matchId = socket.viewingMatchId;
     // If room has no more sockets, remove doc from tracking so that no
     // further updates will be calculated and emitted for this match
-    if (matchId && !io.of('/').adapter.rooms.has(matchId)) realtimeService.removeMatchFromViewing(matchId);
+    // Keep updating for mobile browsers
+    // if (matchId && !io.of('/').adapter.rooms.has(matchId)) realtimeService.removeMatchFromViewing(matchId);
   });
   
 });
