@@ -11,19 +11,31 @@ import GridNoMenu from './screens/GridNoMenu/GridNoMenu';
 export default function App() {
   const history = useHistory();
   const [state, dispatch] = useReducer(storeReducer, initialState);
-  
+
+  function renewViewMatch() {
+    if (document.visibilityState === 'visible' && state.viewingMatch) {
+      realtimeService.viewMatch(state.viewMatch._id, dispatch);
+    }
+  }
+
   useEffect(function () {
     // Fetch the current tourney from the server every hour
     tourneyService.setCurTourney(dispatch);
     // Enable realtimeService to call dispatch
     realtimeService.setDispatch(dispatch);
     realtimeService.syncMatchesWithServer();
+    // If mobile "tab" is reactivated
+    document.addEventListener('visibilitychange', renewViewMatch);
     // init will return true if this is the first visit for the device
     if (settingsService.initialize(dispatch)) history.replace('/welcome');
+    // Cleanup
+    return function () {
+      document.removeEventListener('visibilitychange', renewViewMatch);
+    }
   }, []);
 
   return (
-    <StoreProvider.Provider value={{state, dispatch}}>
+    <StoreProvider.Provider value={{ state, dispatch }}>
       <Switch>
         <Route path='/welcome' render={() =>
           <GridNoMenu />

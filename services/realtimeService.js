@@ -22,7 +22,7 @@ function getAllMatchesThatExistOnClient(matchIds) {
 
 function updateAllMatchesBeingViewed(updatedPlayerIds) {
   const tourney = getCurrentTourney();
-  let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney._id)
+  let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney)
     .filter(m => m.players.some(p => updatedPlayerIds.includes(p.playerId)));
   for (let match of matches) {
     matchService.computeSkins(match, tourney.leaderboard);

@@ -25,12 +25,12 @@ function notifyClientsOfUpdatedMatch(match) {
   global.io.to(match.id).emit(messages.UPDATE_VIEWING_MATCH, match);
 }
 
-function cleanupAndGetAllMatchesBeingViewed(tourneyId) {
+function cleanupAndGetAllMatchesBeingViewed(tourney) {
   // Before returning matches being viewed for the currently
   // updated tourney, remove any stragler matches not for cur tourney
   const matches = Object.values(viewingMatchesForCurTourney);
   for (let match of matches) {
-    if ( !match.tourneyId.equals(tourneyId)) delete viewingMatchesForCurTourney[match._id.toString()];
+    if ( !match.tourneyId.equals(tourney._id) || !match.roundNum === tourney.curRound) delete viewingMatchesForCurTourney[match._id.toString()];
   }
   return matches;
 }
@@ -58,8 +58,8 @@ async function getMatchViewing(matchId, curTourney) {
     // Will throw error if round hasn't started
     try {
       computeSkins(matchDoc, curTourney.leaderboard);
-    } catch {
-      // Nothing to do here
+    } catch (e) {
+      console.log(e);
     } finally {
       addMatchToViewing(matchDoc);
     }
@@ -84,7 +84,7 @@ function computeSkins(matchData, leaderboard) {
       round: lbPlayer.rounds[parseInt(matchData.roundNum) - 1]
     }
   });
-  if (matchData.players.some(p => !p.round)) return;
+  if (matchData.players.some(p => !p.round) || matchData.players.some(p => !p.round.holes.length)) return;
   for (let holeIdx = 0; holeIdx < 18; holeIdx++) {
     updateHoleForSkins(matchData.players, holeIdx);
   }
