@@ -24,7 +24,7 @@ function updateAllMatchesBeingViewed(updatedPlayerIds) {
   const tourney = getCurrentTourney();
   let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney)
     .filter(m => m.players.some(p => updatedPlayerIds.includes(p.playerId)));
-  console.log(`Updating ${matches.length} matches`);
+  if (matches.length) console.log(`Updating ${matches.length} matches`);
   for (let match of matches) {
     matchService.computeSkins(match, tourney.leaderboard);
     match.save().then(doc => {
