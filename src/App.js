@@ -13,14 +13,9 @@ export default function App() {
   const [state, dispatch] = useReducer(storeReducer, initialState);
 
   function renewViewMatch() {
-    if (document.visibilityState === 'visible' && isViewingMatch()) {
-      window.location.reload();
-      // dispatch({action: actions.RECONNECT});
+    if (document.visibilityState === 'visible') {
+      dispatch({type: actions.RECONNECT});
     }
-  }
-
-  function isViewingMatch() {
-    return !!state.viewingMatch;
   }
 
   useEffect(function () {
@@ -29,14 +24,14 @@ export default function App() {
     // Enable realtimeService to call dispatch
     realtimeService.setDispatch(dispatch);
     realtimeService.syncMatchesWithServer();
-    // init will return true if this is the first visit for the device
-    if (settingsService.initialize(dispatch)) history.replace('/welcome');
     // If mobile "tab" is reactivated
-    document.addEventListener('visibilitychange', renewViewMatch);    
+    document.addEventListener('visibilitychange', renewViewMatch);
     // Cleanup
     return function () {
       document.removeEventListener('visibilitychange', renewViewMatch);
     }
+    // init will return true if this is the first visit for the device
+    if (settingsService.initialize(dispatch)) history.replace('/welcome');
   }, []);
   
   return (

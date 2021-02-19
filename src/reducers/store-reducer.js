@@ -69,7 +69,10 @@ function storeReducer(state, action) {
     case actions.UPDATE_UI_SAVE_BTN:
       return { ...state, ui: { ...state.ui, saveBtnDisabled: action.payload } };
     case actions.RECONNECT:
-      if (state.viewingMatch) realtimeService.viewMatch(state.viewingMatch._id, null);
+      if (state.viewingMatch) {
+        realtimeService.sendDebugMsg(`store-reducer.RECONNECT - match._id: ${viewingMatch._id}`);
+        realtimeService.viewMatch(state.viewingMatch._id, null);
+      }
       return { ...state };
     default:
       console.log('Received unknow action.type', action.type);

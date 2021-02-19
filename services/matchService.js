@@ -30,7 +30,10 @@ function cleanupAndGetAllMatchesBeingViewed(tourney) {
   // updated tourney, remove any stragler matches not for cur tourney
   const matches = Object.values(viewingMatchesForCurTourney);
   for (let match of matches) {
-    if ( !match.tourneyId.equals(tourney._id) || !match.roundNum === tourney.curRound) delete viewingMatchesForCurTourney[match._id.toString()];
+    if ( !match.tourneyId.equals(tourney._id) || !match.roundNum === tourney.curRound ) {
+      console.log(`matchService.cleanupAndGetAllMatchesBeingViewed - going to delete from viewingMatchesForCurTourney / matchId: ${match._id}`);
+      delete viewingMatchesForCurTourney[match._id.toString()];
+    }
   }
   return matches;
 }
