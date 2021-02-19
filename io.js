@@ -6,6 +6,10 @@ global.io = io;
 
 io.on('connection', function(socket) {
 
+  socket.on(messages.DEBUG, function(msg) {
+    console.log(`socket: ${socket.id}\nSent Debug Messge: ${msg}`);
+  });
+
   socket.on(messages.SYNC_MATCHES, async function(clientMatchIds, cb) {
     const matchDocs = await realtimeService.getAllMatchesThatExistOnClient(clientMatchIds);
     cb(matchDocs);

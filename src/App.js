@@ -13,6 +13,7 @@ export default function App() {
   const [state, dispatch] = useReducer(storeReducer, initialState);
 
   function renewViewMatch() {
+    realtimeService.sendDebugMsg(`App: renewViewMatch\nvisibilityState: ${document.visibilityState}\nstate.viewingMatch: ${!!state.viewingMatch}`);
     if (document.visibilityState === 'visible' && state.viewingMatch) {
       dispatch({action: actions.RECONNECT});
     }
@@ -32,6 +33,7 @@ export default function App() {
     // Cleanup
     return function () {
       document.removeEventListener('visibilitychange', renewViewMatch);
+      window.removeEventListener('pageshow', renewViewMatch);
     }
   }, []);
 

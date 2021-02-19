@@ -8,6 +8,7 @@ const socket = window.io();
 let savedDispatch;
 
 export default {
+  sendDebugMsg,
   setDispatch,
   syncMatchesWithServer,
   createMatch,
@@ -18,6 +19,10 @@ export default {
 };
 
 /*--- Emitters ---*/
+function sendDebugMsg(msg) {
+  socket.emit(messages.DEBUG, msg);
+}
+
 function deleteMatch(matchId, isMatchOwner) {
   savedDispatch({type: actions.DELETE_MATCH, payload: matchId});
   if (isMatchOwner) socket.emit(messages.DELETE_MATCH, matchId);
@@ -63,5 +68,6 @@ socket.on(messages.UPDATE_VIEWING_MATCH, function(match) {
 });
 
 socket.on('reconnect', function renewViewMatch() {
+  sendDebugMsg('socket.on: reconnect');
   savedDispatch({type: actions.RECONNECT});
 });
