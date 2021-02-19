@@ -48,9 +48,7 @@ async function syncMatchesWithServer() {
 
 function viewMatch(matchId, dispatch) {
   if (dispatch) savedDispatch = dispatch;
-  sendDebugMsg(`(3) realtimeService.viewMatch will emit.START_VIEWING_MATCH / matchId: ${matchId}`);
   socket.emit(messages.START_VIEWING_MATCH, matchId, function(matchExists) {
-    sendDebugMsg(`realtimeService.viewMatch called back / matchExists: ${matchExists}`);
     if (!matchExists) savedDispatch({type: actions.DELETE_MATCH, payload: matchId});
   });
 }
@@ -66,11 +64,10 @@ function createMatch(matchData, cb) {
 
 /*--- Listeners ---*/
 socket.on(messages.UPDATE_VIEWING_MATCH, function(match) {
-  sendDebugMsg(`(10) socket.on:UPDATE_VIEWING_MATCH - match._id: ${match._id}`);
   if (match) savedDispatch({type: actions.UPDATE_VIEWING_MATCH, payload: match});
 });
 
-socket.on('reconnect', function renewViewMatch() {
-  sendDebugMsg('socket.on: reconnect');
-  savedDispatch({type: actions.RECONNECT});
-});
+// socket.on('reconnect', function renewViewMatch() {
+//   sendDebugMsg('socket.on: reconnect');
+//   savedDispatch({type: actions.RECONNECT});
+// });

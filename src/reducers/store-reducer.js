@@ -18,8 +18,7 @@ export const initialState = {
   viewingMatch: null,
   ui: {
     matchesTab: 'current',
-    saveBtnDisabled: false,
-    rerenderCount: 0
+    saveBtnDisabled: false
   }
 };
 
@@ -50,10 +49,8 @@ function storeReducer(state, action) {
     case actions.UPDATE_FORM_DATA:
       return { ...state, formData: { ...state.formData, ...action.payload } };
     case actions.UPDATE_VIEWING_MATCH:
-      realtimeService.sendDebugMsg(`(11) store-reducer:UPDATE_VIEWING_MATCH / action.payload._id: ${action.payload._id}`);
       matchService.updateSavedMatch(action.payload);
       const matches = matchService.getSavedMatches();
-      realtimeService.sendDebugMsg(`(12) store-reducer:UPDATE_VIEWING_MATCH - going to update state`);
       return { ...state, viewingMatch: action.payload, savedMatches: matches };
     case actions.SET_ALL_MATCHES:
       matchService.setSavedMatches(action.payload);
@@ -72,9 +69,8 @@ function storeReducer(state, action) {
     case actions.UPDATE_UI_SAVE_BTN:
       return { ...state, ui: { ...state.ui, saveBtnDisabled: action.payload } };
     case actions.RECONNECT:
-      realtimeService.sendDebugMsg(`(2) store-reducer:RECONNECT / state.viewingMatch: ${!!state.viewingMatch}`);
       if (state.viewingMatch) realtimeService.viewMatch(state.viewingMatch._id, null);
-      return { ...state, ui: { ...state.ui, rerenderCount: state.ui.rerenderCount + 1 } };
+      return { ...state };
     default:
       console.log('Received unknow action.type', action.type);
       return state;

@@ -51,23 +51,16 @@ async function deleteMatches(matches, deviceId) {
 }
 
 async function getMatchViewing(matchId, curTourney) {
-  console.log(`(5) matchService.getMatchViewing / matchId: ${matchId}`)
-  if (viewingMatchesForCurTourney[matchId]) {
-    console.log(`(6a) matchService.getMatchViewing returning match from viewingMatchesForCurTourney object`)
-    return Promise.resolve(viewingMatchesForCurTourney[matchId]);
-  }
-  console.log(`(6b) matchService.getMatchViewing need to get match from db`)
+  if (viewingMatchesForCurTourney[matchId]) return Promise.resolve(viewingMatchesForCurTourney[matchId]);
   const matchDoc = await Match.findById(matchId);
   // Only add if match requested is for cur tourney (going to be updated)
   if (matchDoc && matchDoc.tourneyId.equals(curTourney._id)) {
     // Will throw error if round hasn't started
     try {
-      console.log(`(7) matchService.getMatchViewing going to compute skins`)
       computeSkins(matchDoc, curTourney.leaderboard);
     } catch (e) {
       console.log(e);
     } finally {
-      console.log(`(8) matchService.getMatchViewing going to addMatchToViewing`)
       addMatchToViewing(matchDoc);
     }
   }
@@ -76,7 +69,7 @@ async function getMatchViewing(matchId, curTourney) {
 
 function addMatchToViewing(matchDoc) {
   viewingMatchesForCurTourney[matchDoc.id] = matchDoc;
-  console.log(`(9) matchService.addMatchToViewing - ${matchDoc.id}`);
+  console.log(`matchService.addMatchToViewing - ${matchDoc.id}`);
 }
 
 function create(matchData) {
