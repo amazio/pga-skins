@@ -26,7 +26,7 @@ export default function App() {
     realtimeService.syncMatchesWithServer();
     // If mobile "tab" is reactivated
     document.addEventListener('visibilitychange', renewViewMatch);
-    document.addEventListener('pageshow', renewViewMatch);
+    window.addEventListener('pageshow', renewViewMatch);
     // init will return true if this is the first visit for the device
     if (settingsService.initialize(dispatch)) history.replace('/welcome');
     // Cleanup
