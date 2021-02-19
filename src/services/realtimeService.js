@@ -49,6 +49,7 @@ async function syncMatchesWithServer() {
 function viewMatch(matchId, dispatch) {
   if (dispatch) savedDispatch = dispatch;
   socket.emit(messages.START_VIEWING_MATCH, matchId, function(matchExists) {
+    sendDebugMsg(`realtimeService.viewMatch / matchId: ${matchId} / matchExists: ${matchExists}`);
     if (!matchExists) savedDispatch({type: actions.DELETE_MATCH, payload: matchId});
   });
 }
@@ -64,6 +65,7 @@ function createMatch(matchData, cb) {
 
 /*--- Listeners ---*/
 socket.on(messages.UPDATE_VIEWING_MATCH, function(match) {
+  sendDebugMsg(`socket.on:UPDATE_VIEWING_MATCH - match._id: ${match._id}`);
   if (match) savedDispatch({type: actions.UPDATE_VIEWING_MATCH, payload: match});
 });
 
