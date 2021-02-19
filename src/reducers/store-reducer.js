@@ -35,8 +35,7 @@ export const actions = {
   STOP_VIEWING_MATCH: 'STOP_VIEWING_MATCH',
   UPDATE_UI_MATCHES_TAB: 'UPDATE_UI_MATCHES_TAB',
   UPDATE_UI_SAVE_BTN: 'UPDATE_UI_SAVE_BTN',
-  RECONNECT: 'RECONNECT',
-  RERENDER: 'RERENDER'
+  RECONNECT: 'RECONNECT'
 };
 
 function storeReducer(state, action) {
@@ -74,8 +73,6 @@ function storeReducer(state, action) {
     case actions.RECONNECT:
       realtimeService.sendDebugMsg(`store-reducer:RECONNECT / state.viewingMatch: ${!!state.viewingMatch}`);
       if (state.viewingMatch) realtimeService.viewMatch(state.viewingMatch._id, null);
-      return { ...state, ui: { ...state.ui, rerenderCount: state.ui.rerenderCount + 1 } };
-    case actions.RERENDER:
       return { ...state, ui: { ...state.ui, rerenderCount: state.ui.rerenderCount + 1 } };
     default:
       console.log('Received unknow action.type', action.type);
