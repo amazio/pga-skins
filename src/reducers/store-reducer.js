@@ -70,7 +70,7 @@ function storeReducer(state, action) {
       return { ...state, ui: { ...state.ui, saveBtnDisabled: action.payload } };
     case actions.RECONNECT:
       if (state.viewingMatch) {
-        realtimeService.sendDebugMsg(`store-reducer.RECONNECT - match._id: ${viewingMatch._id}`);
+        realtimeService.sendDebugMsg(`store-reducer.RECONNECT - match._id: ${state.viewingMatch._id}`);
         realtimeService.viewMatch(state.viewingMatch._id, null);
       }
       return { ...state };
