@@ -13,10 +13,14 @@ export default function App() {
   const [state, dispatch] = useReducer(storeReducer, initialState);
 
   function renewViewMatch() {
-    realtimeService.sendDebugMsg(`App: renewViewMatch\nvisibilityState: ${document.visibilityState}\nstate.viewingMatch: ${!!state.viewingMatch}`);
-    if (document.visibilityState === 'visible' && state.viewingMatch) {
+    realtimeService.sendDebugMsg(`(1) App: renewViewMatch\nvisibilityState: ${document.visibilityState}\nstate.viewingMatch: ${isViewingMatch()}`);
+    if (document.visibilityState === 'visible' && isViewingMatch()) {
       dispatch({action: actions.RECONNECT});
     }
+  }
+
+  function isViewingMatch() {
+    return !!state.viewingMatch;
   }
 
   useEffect(function () {
@@ -25,16 +29,22 @@ export default function App() {
     // Enable realtimeService to call dispatch
     realtimeService.setDispatch(dispatch);
     realtimeService.syncMatchesWithServer();
-    // If mobile "tab" is reactivated
-    document.addEventListener('visibilitychange', renewViewMatch);
     // init will return true if this is the first visit for the device
     if (settingsService.initialize(dispatch)) history.replace('/welcome');
+  }, []);
+  
+  useEffect(function() {
+    realtimeService.sendDebugMsg('App: running useEffect to add visibilitychange listener');
+    // If mobile "tab" is reactivated
+    document.addEventListener('visibilitychange', renewViewMatch);    
     // Cleanup
     return function () {
+      realtimeService.sendDebugMsg('App: running useEffect cleanup function to remove visibilitychange listener');
       document.removeEventListener('visibilitychange', renewViewMatch);
     }
-  }, []);
-
+  }, [state]);
+  
+  realtimeService.sendDebugMsg(`App: rendering: !!state.viewingMatch: ${!!state.viewingMatch}`);
   return (
     <StoreProvider.Provider value={{ state, dispatch }}>
       <Switch>
