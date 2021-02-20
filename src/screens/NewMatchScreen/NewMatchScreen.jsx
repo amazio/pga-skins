@@ -9,7 +9,7 @@ import SelectPlayers from '../../components/SelectPlayers/SelectPlayers';
 function getDefaultRound(tourney) {
   if (!tourney.isStarted) return '1';
   if (tourney.isFinished) return '4';
-  return tourney.curRound.toString();
+  return Math.min(tourney.roundState === 'Completed' ? tourney.curRound + 1 : 4).toString();
 }
 
 export default function NewMatchScreen() {
