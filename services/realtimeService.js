@@ -21,6 +21,7 @@ function getAllMatchesThatExistOnClient(matchIds) {
 }
 
 function updateAllMatchesBeingViewed(updatedPlayerIds) {
+  if (!Array.isArray(updatedPlayerIds)) return;
   const tourney = getCurrentTourney();
   let matches = matchService.cleanupAndGetAllMatchesBeingViewed(tourney)
     .filter(m => m.players.some(p => updatedPlayerIds.includes(p.playerId)));
