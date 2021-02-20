@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import StoreProvider from '../../contexts/StoreProvider';
 import { actions } from '../../reducers/store-reducer';
 import realtimeService from '../../services/realtimeService';
@@ -11,6 +12,8 @@ export default function SettingsScreen() {
   const { settings: { username, moneyPerSkin, carrySkins, deviceId }, savedMatches, curTourney } = state;
   const [formData, setFormData] = useState({ username, moneyPerSkin, carrySkins });
   const [isConfirmDeleteMatchesOpen, setIsConfirmDeleteMatchesOpen] = useState(false);
+
+  const history = useHistory();
 
   const disableSaveBtn = formInvalid();
   const previousMatches = curTourney ?
@@ -55,6 +58,11 @@ export default function SettingsScreen() {
     setIsConfirmDeleteMatchesOpen(false);
   }
 
+  function handleReset() {
+    window.localStorage.clear();
+    history.go('/');
+  }
+
   return (
     <main className='max-screen-width margin-left-right-auto'>
       <CardHeader title='Settings' />
@@ -79,6 +87,10 @@ export default function SettingsScreen() {
             :
             <Typography variant='body2' className='margin-top-1rem'>No Previous Matches to Remove</Typography>
         }
+
+        <Typography variant='caption' className='flex-item-left margin-top-2rem'>Reset User (All Matches Will Be Lost)</Typography>
+        <br/>
+        <Button onClick={handleReset} variant='outlined' size='small'>RESET USER</Button>
 
         <ConfirmDialog
           isConfirmOpen={isConfirmDeleteMatchesOpen}
